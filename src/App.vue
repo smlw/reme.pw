@@ -44,29 +44,33 @@
         v-layout(align-center justify-start row fill-height)
           v-icon list_alt
           span Мои профайлы
+      router-link.features-link(
+        to="/calendar"
+      )
+        v-layout(align-center justify-start row fill-height)
+          v-icon calendar_today
+          span Календарь
     v-content
       v-container(fluid)
-        .row
-          masonry(
-            :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
-            :gutter="{default: '30px', 768: '15px'}"
-          )
-            div(v-for="(profile, index) in items" :key="index")
-              v-card.item
-                v-img(:src="`${profile.avatar}`" aspect-ratio='2')
-                v-card-title(primary-title)
-                  div
-                    h4.headline.mb-0 {{ profile.title }}
-                    h5.profile-info.mb-0 20 лет
-                    div card_text
-                v-card-actions
-                  v-layout(align-start justify-space-between row fill-height)
-                    router-link.profile-links(
-                      :to="`profile/${profile.id}`"
-                    )
-                      v-btn(flat='', color='orange') Смотреть
-                    v-btn(flat='', color='red')
-                      v-icon(red) delete_forever
+        masonry(
+          :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
+          :gutter="{default: '30px', 768: '15px'}"
+        )
+          div(v-for="(profile, index) in items" :key="index")
+            v-card.item
+              v-img(:src="`${profile.avatar}`" aspect-ratio='1.5')
+              v-card-title(primary-title)
+                div
+                  h4.card-headline.mb-0 {{ profile.title }}
+                  h5.profile-info.mb-0 20 лет
+              v-card-actions
+                v-layout(align-start justify-space-between row fill-height)
+                  router-link.profile-links(
+                    :to="`profile/${profile.id}`"
+                  )
+                    v-btn(flat='', color='orange') Смотреть
+                  v-btn(flat='', color='red')
+                    v-icon(red) delete_forever
     v-footer(app)
 </template>
 
@@ -116,4 +120,9 @@ export default {
   margin 30px 0
   @media screen and (max-width: 768px)
     margin 15px 0
+
+.card
+  &-headline
+    font-size 16px
+
 </style>

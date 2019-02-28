@@ -46,41 +46,44 @@
           span Мои профайлы
     v-content
       v-container(fluid)
-        .masonry(v-masonry, transition-duration='1s')
-          v-card(
-            v-masonry-tile,
-            v-for='profile in items',
-            :key='profile.id'
-            )
-            v-img(:src="`${profile.avatar}`", aspect-ratio='2')
-            v-card-title(primary-title)
-              div
-                h4.headline.mb-0 {{profile.title}}
-                h5.profile-info.mb-0 20 лет
-                div card_text
-            v-card-actions
-              v-layout(align-start justify-space-between row fill-height)
-                router-link.profile-links(
-                  :to="`profile/${profile.id}`"
-                )
-                  v-btn(flat='', color='orange') Смотреть
-                v-btn(flat='', color='red')
-                  v-icon(red) delete_forever
-
+        .row
+          masonry(
+            :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
+            :gutter="{default: '30px', 768: '15px'}"
+          )
+            div(v-for="(profile, index) in items" :key="index")
+              v-card.item
+                v-img(:src="`${profile.avatar}`" aspect-ratio='2')
+                v-card-title(primary-title)
+                  div
+                    h4.headline.mb-0 {{ profile.title }}
+                    h5.profile-info.mb-0 20 лет
+                    div card_text
+                v-card-actions
+                  v-layout(align-start justify-space-between row fill-height)
+                    router-link.profile-links(
+                      :to="`profile/${profile.id}`"
+                    )
+                      v-btn(flat='', color='orange') Смотреть
+                    v-btn(flat='', color='red')
+                      v-icon(red) delete_forever
     v-footer(app)
 </template>
 
 <script>
 export default {
-  data: () => ({
-    tile: false,
-    items: [
-      { id: 1, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', icon: true },
-      { id: 2, title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-      { id: 3, title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
-      { id: 4, title: 'Alid Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
-    ]
-  })
+  data () {
+    return {
+      tile: false,
+      items: [
+        { id: 1, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', icon: true },
+        { id: 2, title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
+        { id: 3, title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
+        { id: 4, title: 'Ali2d Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
+        { id: 4, title: 'Ali2d Connor3s', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
+      ]
+    }
+  }
 }
 </script>
 
@@ -108,4 +111,9 @@ export default {
     border-radius 5px
   i
     margin 0 5px 0 0
+
+.item
+  margin 30px 0
+  @media screen and (max-width: 768px)
+    margin 15px 0
 </style>

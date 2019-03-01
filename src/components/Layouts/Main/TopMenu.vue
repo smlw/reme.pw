@@ -1,24 +1,27 @@
 <template lang="pug">
   v-toolbar(app)
     router-link.features-link(
-        to="add"
-      )
-        v-layout(align-center justify-start row fill-height)
-          v-icon add_circle
-          span Добавить профайл
-    router-link.features-link(
-      to="/dashboard"
-    )
+      v-for='(item, index) in menuItems',
+      :key='index',
+      :to="`${item.to}`")
       v-layout(align-center justify-start row fill-height)
-        v-icon list_alt
-        span Мои профайлы
-    router-link.features-link(
-      to="/calendar"
-    )
-      v-layout(align-center justify-start row fill-height)
-        v-icon calendar_today
-        span Календарь
+        v-icon {{ item.icon }}
+        span {{ item.title }}
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      menuItems: [
+        {title: 'Добавить профайл', to: '/add', icon: 'add_circle'},
+        {title: 'Мои профайлы', to: '/dashboard', icon: 'list_alt'},
+        {title: 'Календарь', to: '/calendar', icon: 'calendar_today'}
+      ]
+    }
+  }
+}
+</script>
 
 <style lang="stylus" scoped>
 .features-link

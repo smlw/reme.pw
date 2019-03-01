@@ -1,15 +1,15 @@
 <template lang="pug">
   Layout
     template(v-slot:content='')
-      .d testlay22
+      .d user profile {{ $route.params.id }}
 </template>
 
 <script>
 import Layout from '@/layouts/main'
 export default {
-  name: 'Test',
+  name: 'Profile',
   metaInfo: {
-    title: 'test title'
+    title: 'Profile'
   },
   components: { Layout }
 }

@@ -3,9 +3,8 @@ import Router from 'vue-router'
 
 import Index from '@/pages/Index'
 import Dashboard from '@/pages/Dashboard'
-// import Profile from '@/pages/Profile'
-// import AddProfile from '@/pages/AddProfile'
-// import Id from '@/pages/_id'
+import AddProfile from '@/pages/AddProfile'
+import ViewProfile from '@/pages/ViewProfile'
 
 Vue.use(Router)
 
@@ -21,6 +20,16 @@ export default new Router({
       name: 'dashboard',
       path: '/dashboard',
       component: Dashboard
+    },
+    {
+      name: 'add profile',
+      path: '/add',
+      component: AddProfile
+    },
+    {
+      name: 'view profile',
+      path: '/profile/:id',
+      component: ViewProfile
     }
   ]
 })

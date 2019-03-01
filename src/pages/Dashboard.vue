@@ -15,7 +15,7 @@
             v-card-actions
               v-layout(align-start justify-space-between row fill-height)
                 router-link.profile-links(
-                  :to="`${profile.id}`"
+                  :to="`profile/${profile.id}`"
                 )
                   v-btn(flat='', color='orange') Смотреть
                 v-btn(flat='', color='red')

@@ -1,15 +1,15 @@
 <template lang="pug">
   Layout
     template(v-slot:content='')
-      .d testlay22
+      .d Add profile page
 </template>
 
 <script>
 import Layout from '@/layouts/main'
 export default {
-  name: 'Test',
+  name: 'Add profile',
   metaInfo: {
-    title: 'test title'
+    title: 'Add profile'
   },
   components: { Layout }
 }

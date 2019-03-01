@@ -1,6 +1,6 @@
 <template lang="pug">
-  v-content
-    v-container(fluid)
+  Layout
+    template(v-slot:content='')
       masonry(
         :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
         :gutter="{default: '30px', 768: '15px'}"
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import Layout from '@/layouts/main'
 export default {
   data () {
     return {
@@ -35,7 +36,12 @@ export default {
         { id: 4, title: 'Ali2d Connor3s', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
       ]
     }
-  }
+  },
+  name: 'Dashboard',
+  metaInfo: {
+    title: 'Dashboard'
+  },
+  components: { Layout }
 }
 </script>
 

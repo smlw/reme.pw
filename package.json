@@ -17,6 +17,7 @@
     "stylus-loader": "^3.0.2",
     "vue": "^2.5.2",
     "vue-masonry-css": "^1.0.3",
+    "vue-meta": "^1.5.8",
     "vue-router": "^3.0.1",
     "vuetify": "^1.5.3"
   },

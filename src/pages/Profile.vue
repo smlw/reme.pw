@@ -33,13 +33,13 @@
             v-list-tile-title Напоминания о днях рождения
     v-toolbar(app)
       router-link.features-link(
-        to="/add-profile"
+        to="add"
       )
         v-layout(align-center justify-start row fill-height)
           v-icon add_circle
           span Добавить профайл
       router-link.features-link(
-        to="/profiles"
+        to="/profile"
       )
         v-layout(align-center justify-start row fill-height)
           v-icon list_alt

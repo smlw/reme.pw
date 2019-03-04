@@ -1,22 +1,104 @@
-<script>
-import LeftBar from '@/components/Layouts/Main/LeftBar'
-import TopMenu from '@/components/Layouts/Main/TopMenu'
-import Footer from '@/components/Layouts/Main/Footer'
-export default {
-  components: { LeftBar, TopMenu, Footer }
-}
-</script>
-
 <template lang="pug">
   v-app
     // leftside bar
-    LeftBar
+    v-navigation-drawer(
+      app
+      v-model="drawer"
+      )
+      .user-avatar
+        v-avatar(
+          :tile="tile"
+          :size="48"
+          color="grey"
+        )
+          img(
+            src="https://vuetifyjs.com/apple-touch-icon-180x180.png"
+            alt="avatar"
+          )
+        span Самойлов Александр
+      .user-profiles
+        v-divider
+        v-list
+          v-list-tile(v-for='item in items', :key='item.title', avatar='', @click='')
+            router-link.profile-links(
+              :to="`profile/${item.id}`"
+            )
+              v-list-tile-action
+                v-icon(v-if='item.icon', color='pink') star
+              v-list-tile-content
+                v-list-tile-title(v-text='item.title')
+              v-list-tile-avatar
+                img(:src='item.avatar')
+        v-divider
+        v-list
+          v-list-tile
+            v-list-tile-action
+              v-switch(color='purple')
+            v-list-tile-title Напоминания о днях рождения
     // Topside bar
-    TopMenu
+    v-toolbar(app)
+      v-layout.hidden-lg-and-up(align-center='', justify-space-between='', row='', fill-height='')
+        v-icon(@click.stop='drawer = !drawer') menu
+        .logo() Logo
+      router-link.features-link.hidden-md-and-down(
+        v-for='(item, index) in menuItems',
+        :key='index',
+        :to="`${item.to}`")
+        v-layout(align-center justify-start row fill-height)
+          v-icon {{ item.icon }}
+          span {{ item.title }}
     // Content wrapper
     v-content
       v-container(fluid)
         slot(name='content')
-    v-footer(app)
-      Footer
+    v-footer(app) Footer
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      drawer: null,
+      tile: false,
+      items: [
+        { id: 1, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', icon: true },
+        { id: 2, title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
+        { id: 3, title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
+        { id: 4, title: 'Ali2d Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
+        { id: 4, title: 'Ali2d Connor3s', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
+      ],
+      menuItems: [
+        {title: 'Добавить профайл', to: '/add', icon: 'add_circle'},
+        {title: 'Мои профайлы', to: '/dashboard', icon: 'list_alt'},
+        {title: 'Календарь', to: '/calendar', icon: 'calendar_today'}
+      ]
+    }
+  }
+}
+</script>
+
+<style lang="stylus" scoped>
+.user-avatar
+  padding 15px
+
+.v-avatar
+  margin 0 15px 0 0
+
+.profile-links
+  text-decoration none
+  color black
+  display flex
+  width 100%
+
+.features-link
+  text-decoration none
+  margin 0 15px 0 0
+  padding 5px
+  &:last-child
+    margin 0
+  &:hover
+    background #ECEFF1
+    border-radius 5px
+  i
+    margin 0 5px 0 0
+</style>

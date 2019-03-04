@@ -32,6 +32,34 @@
                   v-list-tile-title(v-text='item.title')
                 v-list-tile-avatar
                   img(:src='item.avatar')
+
+          // User Settings
+          v-list-group(prepend-icon='settings', value='true')
+            template(v-slot:activator='')
+              v-list-tile
+                v-list-tile-title Настройки
+            v-list-group(sub-group='', no-action='')
+              template(v-slot:activator='')
+                v-list-tile
+                  v-list-tile-title Напоминания
+              v-list-tile
+                v-list-tile-title Дни рождения
+                v-list-tile-action
+                  v-switch(color='purple')
+              v-list-tile
+                v-list-tile-title Праздники
+                v-list-tile-action
+                  v-switch(color='purple')
+
+            v-list-group(sub-group='', no-action='')
+              template(v-slot:activator='')
+                v-list-tile
+                  v-list-tile-title Аккаунт
+              v-list-tile
+                v-list-tile-title Изменить пароль
+                v-list-tile-action
+                  v-switch(color='purple')
+
           v-list-group.hidden-lg-and-up(prepend-icon='account_circle', value='true')
             template(v-slot:activator='')
               v-list-tile
@@ -43,12 +71,6 @@
                 v-layout(align-start='', justify-space-between='', row='')
                   span {{ item.title }}
                   v-icon {{ item.icon }}
-        v-divider
-        v-list
-          v-list-tile
-            v-list-tile-action
-              v-switch(color='purple')
-            v-list-tile-title Напоминания о днях рождения
     // Topside bar
     v-toolbar(app)
       v-layout.hidden-lg-and-up(align-center='', justify-space-between='', row='', fill-height='')

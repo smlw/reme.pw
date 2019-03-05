@@ -8,7 +8,7 @@
         :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
         :gutter="{default: '30px', 768: '15px'}"
       )
-        div(v-for="(profile, index) in items" :key="index")
+        div(v-for="(profile, index) in getProfiles" :key="index")
           v-card.item
             v-img(:src="`${profile.avatar}`", height='200px')
             v-card-title(primary-title='')
@@ -24,17 +24,15 @@
 
 <script>
 import Layout from '@/layouts/main'
+import {mapGetters} from 'vuex'
 export default {
   data () {
     return {
-      tile: false,
-      items: [
-        { id: 1, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', age: '20', profession: 'Студент', icon: true },
-        { id: 2, title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg', age: '21', profession: 'Врач' },
-        { id: 3, title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg', age: '20', profession: 'Слесарь' },
-        { id: 4, title: 'Ali2d Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg', age: '18', profession: 'Педагог' }
-      ]
+      tile: false
     }
+  },
+  computed: {
+    ...mapGetters(['getProfiles'])
   },
   name: 'Dashboard',
   metaInfo: {

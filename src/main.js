@@ -3,16 +3,19 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import VueMasonry from 'vue-masonry-css'
 import Meta from 'vue-meta'
 import Vuelidate from 'vuelidate'
+import Vuex from 'vuex'
+import store from './store'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
-Vue.use(Vuetify)
 Vue.use(VueMasonry)
+Vue.use(Vuetify)
 Vue.use(Vuelidate)
+Vue.use(Vuex)
 Vue.use(Meta, {
   keyName: 'metaInfo', // the component option name that vue-meta looks for meta info on.
   attribute: 'data-vue-meta', // the attribute name vue-meta adds to the tags it observes
@@ -26,6 +29,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

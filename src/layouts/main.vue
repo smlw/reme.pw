@@ -52,9 +52,6 @@ export default {
   text-decoration none
   margin 0 15px 0 0
   padding 5px
-  width 100%
-  @media screen and (min-width: 1264px)
-    width auto
   &:last-child
     margin 0
   &:hover

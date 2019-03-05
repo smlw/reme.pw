@@ -26,6 +26,17 @@
             v-list-tile-title Изменить пароль
             v-list-tile-action
               v-switch(color='purple')
+      v-list-group.hidden-lg-and-up(prepend-icon='view_list', value='true')
+        template(v-slot:activator='')
+          v-list-tile
+            v-list-tile-title Действия
+
+        v-list-tile(v-for='(item, i) in menuItems', :key='i', @click='')
+          router-link.features-link(:to="`${item.to}`")
+            v-list-tile
+              v-list-tile-title {{ item.title }}
+              v-list-tile-action
+                v-icon(right) {{ item.icon }}
 </template>
 
 <script>
@@ -45,4 +56,8 @@ export default {
 <style lang="stylus" scoped>
 .v-list
   padding 0
+.features-link
+  text-decoration none
+  width 100%
+  color: rgba(0,0,0,.87)
 </style>

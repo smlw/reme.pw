@@ -1,6 +1,9 @@
 <template lang="pug">
   Layout
     template(v-slot:content='')
+      h1(
+        class="display-1"
+      ) Мои профайлы
       masonry(
         :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
         :gutter="{default: '30px', 768: '15px'}"
@@ -13,7 +16,10 @@
                 .headline {{ profile.title }}
                 span.grey--text {{ profile.age }} лет. {{ profile.profession }}
             v-card-actions
-              v-btn(flat='') Смотреть
+              router-link.profile-links(
+                :to="`profile/${profile.id}`"
+              )
+                v-btn(flat='') Смотреть
 </template>
 
 <script>

@@ -6,11 +6,30 @@
       ) Добавить новый профайл
       v-flex(xs12, lg12)
         .add-profile-wrapper(class='pt-5')
+          // AVATAR
           .add-profile__avatar
             v-layout(align-center='', justify-start='', column='', fill-height='').add-profile__avatar--wrapper
-              v-avatar(:size='100', color="grey lighten-2")
-                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="-3 -3 30 30"><path d="M9 3L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 17l1.25-2.75L16 13l-2.75-1.25L12 9l-1.25 2.75L8 13l2.75 1.25z"/></svg>
-              v-btn(color='primary', class='mt-3') Добавить фотографию
+              v-avatar(:size='150', color="grey lighten-2")
+                img(v-if="upload.imgDataUrl" :src='upload.imgDataUrl' @click='toggleShow')
+                <svg v-else xmlns="http://www.w3.org/2000/svg" @click='toggleShow' width="50" height="50" viewBox="-3 -3 30 30"><path d="M9 3L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 17l1.25-2.75L16 13l-2.75-1.25L12 9l-1.25 2.75L8 13l2.75 1.25z"/></svg>
+              a.mt-1(v-if="!upload.imgDataUrl", @click='toggleShow', prevent) Добавить аватар
+              h3.title.mt-3 {{ fio }}
+              h4.body-2.mt-1 {{ birthday }}
+              my-upload(
+                  field='img',
+                  @crop-success='cropSuccess',
+                  @crop-upload-success='cropUploadSuccess',
+                  @crop-upload-fail='cropUploadFail',
+                  v-model='upload.uploadShow',
+                  :width='300', :height='300',
+                  url='/profile/upload',
+                  :params='upload.params',
+                  :headers='upload.headers',
+                  img-format='png',
+                  langType='ru',
+                )
+
+          // FORM
           .add-profile__main-form
             v-form(ref='form', lazy-validation='', @submit.prevent='')
               v-text-field(
@@ -41,33 +60,39 @@
                 color='success', class='mt-4', @click='onSubmit'
                 type="submit" :disabled="submitStatus === 'PENDING'"
                 ) Сохранить
+      // ALERTS
       v-snackbar(v-model='snackbar.show', :color='snackbar.color', :timeout="6000") {{ snackbar.message }}
-        v-btn(color='white', flat='', @click='snackbar = false')
+        v-btn(color='white', flat='', @click='snackbar.show = false')
           v-icon() close
 </template>
 
 <script>
 import Layout from '@/layouts/main'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import myUpload from 'vue-image-crop-upload'
 export default {
   data () {
     return {
-      fio: '',
-      menuBirthday: false,
-      birthday: null,
-      submitStatus: null,
+      upload: {
+        uploadShow: false,
+        params: {
+          token: '123456798',
+          name: 'avatar'
+        },
+        headers: {
+          smail: '*_~'
+        },
+        imgDataUrl: ''
+      },
       snackbar: {
         show: false,
         message: '',
         color: ''
-      }
-    }
-  },
-  watch: {
-    dialog (val) {
-      if (!val) return
-
-      setTimeout(() => (this.dialog = false), 4000)
+      },
+      fio: '',
+      menuBirthday: false,
+      birthday: null,
+      submitStatus: null
     }
   },
   validations: {
@@ -83,6 +108,25 @@ export default {
     }
   },
   methods: {
+    // Avatar methods
+    toggleShow () {
+      this.upload.uploadShow = !this.upload.uploadShow
+    },
+    cropSuccess (imgDataUrl, field) {
+      console.log('-------- crop success --------')
+      this.upload.imgDataUrl = imgDataUrl
+    },
+    cropUploadSuccess (jsonData, field) {
+      console.log('-------- upload success --------')
+      console.log(jsonData)
+      console.log('field: ' + field)
+    },
+    cropUploadFail (status, field) {
+      console.log('-------- upload fail --------')
+      console.log(status)
+      console.log('field: ' + field)
+    },
+    // Submit form
     onSubmit () {
       this.$v.$touch()
       if (this.$v.$invalid) {
@@ -129,7 +173,7 @@ export default {
   metaInfo: {
     title: 'Add profile'
   },
-  components: { Layout }
+  components: { Layout, 'my-upload': myUpload }
 }
 </script>
 

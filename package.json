@@ -11,11 +11,13 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue": "^2.5.2",
+    "vue-image-crop-upload": "^2.5.0",
     "vue-masonry-css": "^1.0.3",
     "vue-meta": "^1.5.8",
     "vue-router": "^3.0.1",

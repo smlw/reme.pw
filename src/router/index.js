@@ -29,7 +29,13 @@ export default new Router({
     {
       name: 'view profile',
       path: '/profile/:id',
-      component: ViewProfile
+      component: ViewProfile,
+      children: [
+        {
+          name: 'edit profile',
+          path: 'edit'
+        }
+      ]
     }
   ]
 })

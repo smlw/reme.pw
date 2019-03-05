@@ -88,7 +88,9 @@
     v-content
       v-container(fluid)
         slot(name='content')
-    v-footer(app) Footer
+    v-footer(dark='', height='auto', app)
+      v-card.flex(flat='', tile='')
+        v-card-actions.grey.darken-0.justify-center © 2019 — RememberMe
 </template>
 
 <script>

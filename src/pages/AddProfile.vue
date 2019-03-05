@@ -41,7 +41,9 @@
                 color='success', class='mt-4', @click='onSubmit'
                 type="submit" :disabled="submitStatus === 'PENDING'"
                 ) Сохранить
-
+      v-snackbar(v-model='snackbar.show', :color='snackbar.color', :timeout="6000") {{ snackbar.message }}
+        v-btn(color='white', flat='', @click='snackbar = false')
+          v-icon() close
 </template>
 
 <script>
@@ -53,7 +55,19 @@ export default {
       fio: '',
       menuBirthday: false,
       birthday: null,
-      submitStatus: null
+      submitStatus: null,
+      snackbar: {
+        show: false,
+        message: '',
+        color: ''
+      }
+    }
+  },
+  watch: {
+    dialog (val) {
+      if (!val) return
+
+      setTimeout(() => (this.dialog = false), 4000)
     }
   },
   validations: {
@@ -74,6 +88,11 @@ export default {
       if (this.$v.$invalid) {
         this.submitStatus = 'ERROR'
         console.log('Error!')
+        this.snackbar = {
+          show: true,
+          color: 'red',
+          message: 'Ошибка!'
+        }
       } else {
         // do your submit logic here
         this.submitStatus = 'PENDING'
@@ -81,6 +100,11 @@ export default {
         setTimeout(() => {
           this.submitStatus = 'OK'
           console.log('OK!')
+          this.snackbar = {
+            show: true,
+            color: 'success',
+            message: 'Успех! Профиль успешно создан.'
+          }
         }, 500)
       }
     }
@@ -119,4 +143,9 @@ export default {
     .add-profile__main-form,
     .add-profile__avatar
       width 40%
+
+.alert-wrapper
+  position absolute
+  top 0
+  width 100%
 </style>

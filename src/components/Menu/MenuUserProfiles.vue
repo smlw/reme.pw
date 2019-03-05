@@ -5,28 +5,21 @@
         template(v-slot:activator='')
           v-list-tile
             v-list-tile-title Профили
-        v-list-tile(v-for='item in items', :key='item.title', avatar='', @click='')
+        v-list-tile(v-for='profile in getProfiles', :key='profile.title', avatar='', @click='')
           router-link.profile-links(
-            :to="`profile/${item.id}`"
+            :to="`profile/${profile.id}`"
           )
             v-list-tile-content
-              v-list-tile-title(v-text='item.title')
+              v-list-tile-title(v-text='profile.title')
             v-list-tile-avatar
-              img(:src='item.avatar')
+              img(:src='profile.avatar')
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
-  data () {
-    return {
-      items: [
-        { id: 1, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-        { id: 2, title: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-        { id: 3, title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
-        { id: 4, title: 'Ali2d Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
-        { id: 4, title: 'Ali2d Connor3s', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' }
-      ]
-    }
+  computed: {
+    ...mapGetters(['getProfiles'])
   }
 }
 </script>

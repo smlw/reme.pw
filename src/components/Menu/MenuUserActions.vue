@@ -1,6 +1,6 @@
 <template lang="pug">
   // User Settings
-  .user-profiles
+  .user-actions
     v-list
       v-list-group(prepend-icon='settings', value='true')
         template(v-slot:activator='')

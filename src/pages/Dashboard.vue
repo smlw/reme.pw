@@ -26,11 +26,6 @@
 import Layout from '@/layouts/main'
 import {mapGetters} from 'vuex'
 export default {
-  data () {
-    return {
-      tile: false
-    }
-  },
   computed: {
     ...mapGetters(['getProfiles'])
   },

@@ -8,6 +8,9 @@ export default {
   metaInfo: {
     title: 'Index',
     titleTemplate: '%s | Remember Me'
+  },
+  created () {
+    this.$store.dispatch('loadProfiles')
   }
 }
 </script>

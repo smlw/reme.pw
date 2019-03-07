@@ -20,12 +20,12 @@
           :cols="{default: 3, 1000: 3, 768: 2, 400: 1}"
           :gutter="{default: '30px', 768: '15px'}"
         )
-          v-flex.customSection.item(
+          v-flex.customSection.item.box-shadow.mb-3(
             v-for="(section, index) in sections"
             :key='index'
           )
             // Header of section
-            v-layout(align-center='', justify-space-between='', row='', fill-height='').title__actions
+            v-layout(align-center='', justify-space-between='', row='', fill-height='').title__actions.pl-3.pt-2.pb-2
               .title {{ section.sectionTitle }}
               .title__actions
                 v-btn(fab, dark, outline, small, color='indigo', @click="section.showAddForm = !section.showAddForm")
@@ -48,7 +48,8 @@
 
             // Form for add item
             .add-item-form(v-if="section.showAddForm")
-              v-layout(align-center='', justify-start='', row='', fill-height='')
+              v-divider
+              v-layout(align-center='', justify-center='', row='', fill-height='')
                 v-form(ref='form', lazy-validation='', @submit.prevent='')
                   v-text-field(
                     :label="`${section.sectionTitle}`"
@@ -140,5 +141,7 @@ export default {
 </script>
 
 <style lang="stylus" scope>
-
+.box-shadow
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+    background #fff
 </style>

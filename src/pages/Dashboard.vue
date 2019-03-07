@@ -4,22 +4,24 @@
       h1(
         class="display-1"
       ) Мои профайлы
-      masonry(
-        :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
-        :gutter="{default: '30px', 768: '15px'}"
-      )
-        div(v-for="(profile, index) in getProfiles" :key="index")
-          v-card.item
-            v-img(:src="`${profile.avatar}`", height='200px')
-            v-card-title(primary-title='')
-              div
-                .headline {{ profile.title }}
-                span.grey--text {{ profile.age }} лет. {{ profile.profession }}
-            v-card-actions
-              router-link.profile-links(
-                :to="`profile/${profile.id}`"
-              )
-                v-btn(flat='') Смотреть
+      .profiles(v-for="(profile, index) in getProfiles" :key="index")
+        span {{ profile.name }}
+      //- masonry(
+      //-   :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
+      //-   :gutter="{default: '30px', 768: '15px'}"
+      //- )
+      //-   div(v-for="(profile, index) in getProfiles" :key="index")
+      //-     v-card.item
+      //-       v-img(:src="`${profile.avatar}`", height='200px')
+      //-       v-card-title(primary-title='')
+      //-         div
+      //-           .headline {{ profile.title }}
+      //-           span.grey--text {{ profile.age }} лет. {{ profile.profession }}
+      //-       v-card-actions
+      //-         router-link.profile-links(
+      //-           :to="`profile/${profile.id}`"
+      //-         )
+      //-           v-btn(flat='') Смотреть
 </template>
 
 <script>

@@ -1,3 +1,5 @@
+import Axios from 'axios'
+
 const state = {
   profiles: [
     { id: 1, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', age: '20', profession: 'Студент' },
@@ -7,9 +9,26 @@ const state = {
   ]
 }
 
-const actions = {}
+const actions = {
+  newProfile: async ({commit}, payload) => {
+    try {
+      await Axios.post('http://127.0.0.1:3001/api/profile/add', {
+        fio: payload.fio,
+        birthday: payload.birthday
+      })
 
-const mutations = {}
+      commit('newProfile', payload)
+    } catch (error) {
+      throw error
+    }
+  }
+}
+
+const mutations = {
+  newProfile: (state, payload) => {
+    state.profiles.push(payload)
+  }
+}
 
 const getters = {
   getProfiles: state => {

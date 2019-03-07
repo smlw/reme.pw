@@ -90,6 +90,7 @@ export default {
         color: ''
       },
       fio: '',
+      owner: null,
       menuBirthday: false,
       birthday: null,
       submitStatus: null
@@ -131,7 +132,6 @@ export default {
       this.$v.$touch()
       if (this.$v.$invalid) {
         this.submitStatus = 'ERROR'
-        console.log('Error!')
         this.snackbar = {
           show: true,
           color: 'red',
@@ -140,16 +140,40 @@ export default {
       } else {
         // do your submit logic here
         this.submitStatus = 'PENDING'
-        console.log('PENDING!')
-        setTimeout(() => {
-          this.submitStatus = 'OK'
-          console.log('OK!')
-          this.snackbar = {
-            show: true,
-            color: 'success',
-            message: 'Успех! Профиль успешно создан.'
-          }
-        }, 500)
+
+        // build profile info for send to sever
+        const profile = {
+          fio: this.fio,
+          birthday: this.birthday
+        }
+        // Initiate action in the store
+        this.$store.dispatch('newProfile', profile)
+
+          .then(() => {
+            this.submitStatus = 'OK'
+            this.snackbar = {
+              show: true,
+              color: 'success',
+              message: 'Успех! Профиль успешно создан.'
+            }
+          })
+          .catch(err => {
+            this.submitStatus = err.message
+            this.snackbar = {
+              show: true,
+              color: 'red',
+              message: 'Ошибка!'
+            }
+          })
+        // setTimeout(() => {
+        //   this.submitStatus = 'OK'
+        //   console.log('OK!')
+        //   this.snackbar = {
+        //     show: true,
+        //     color: 'success',
+        //     message: 'Успех! Профиль успешно создан.'
+        //   }
+        // }, 500)
       }
     }
   },

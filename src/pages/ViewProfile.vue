@@ -13,8 +13,8 @@
               alt="avatar"
             )
         v-layout(align-start='', justify-center='', column='', fill-height='')
-          h1.title.ml-4 Самойлов Александр Сергеевич
-          h2.subheading.ml-4 5 июня 1997 — 21 год
+          h1.title.ml-4 Самойлов Александр Сергеевич {{profileId}} {{$route.params.id}}
+          h2.subheading.ml-4 5 июня 1997 — 21 год {{ getOneProfile }}
       .customSection__wrapper.mt-4
         masonry(
           :cols="{default: 3, 1000: 3, 768: 2, 400: 1}"
@@ -58,9 +58,11 @@
 
 <script>
 import Layout from '@/layouts/main'
+// import {mapGetters} from 'vuex'
 export default {
   data () {
     return {
+      profileId: this.$route.params.id,
       showHobbies: false,
       sections: [
         {
@@ -122,6 +124,11 @@ export default {
           ]
         }
       ]
+    }
+  },
+  computed: {
+    getOneProfile () {
+      return this.$store.getters.getOneProfile
     }
   },
   name: 'Profile',

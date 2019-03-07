@@ -9,8 +9,11 @@ import Vuelidate from 'vuelidate'
 import Vuex from 'vuex'
 import store from './store'
 import Vuetify from 'vuetify'
+import { sync } from 'vuex-router-sync'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+
+sync(store, router)
 
 Vue.use(VueMasonry)
 Vue.use(Vuetify)

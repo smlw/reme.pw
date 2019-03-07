@@ -148,7 +148,6 @@ export default {
         }
         // Initiate action in the store
         this.$store.dispatch('newProfile', profile)
-
           .then(() => {
             this.submitStatus = 'OK'
             this.snackbar = {
@@ -165,15 +164,6 @@ export default {
               message: 'Ошибка!'
             }
           })
-        // setTimeout(() => {
-        //   this.submitStatus = 'OK'
-        //   console.log('OK!')
-        //   this.snackbar = {
-        //     show: true,
-        //     color: 'success',
-        //     message: 'Успех! Профиль успешно создан.'
-        //   }
-        // }, 500)
       }
     }
   },

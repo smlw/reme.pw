@@ -192,7 +192,9 @@ export default {
 }
 </script>
 
-<style lang="stylus" scope>
+<style lang="stylus" scoped>
+.v-avatar
+  margin 0
 .add-profile-wrapper
   display flex
   flex-direction column

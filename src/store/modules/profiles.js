@@ -21,30 +21,12 @@ const actions = {
     } catch (error) {
       throw error
     }
-  },
-  loadProfile: async ({commit}, payload) => {
-    try {
-      const {data} = await Axios.get('http://127.0.0.1:3001/api/profile/', {
-        params: {
-          id: payload.id
-        }
-      })
-
-      console.log(data + ' hz ')
-
-      commit('loadProfile', payload.id)
-    } catch (error) {
-      throw error
-    }
   }
 }
 
 const mutations = {
   newProfile: (state, payload) => {
     state.profiles.push(payload)
-  },
-  loadProfile: (state, payload) => {
-    state.profiles = payload
   }
 }
 

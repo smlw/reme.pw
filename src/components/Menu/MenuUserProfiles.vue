@@ -1,6 +1,7 @@
 <template lang="pug">
   .user-profiles
     v-list
+      p {{getProfiles}}
       v-list-group(prepend-icon='account_circle', value='true')
         template(v-slot:activator='')
           v-list-tile

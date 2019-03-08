@@ -21,7 +21,7 @@
           :gutter="{default: '30px', 768: '15px'}"
         )
           v-flex.customSection.item.box-shadow.mb-3(
-            v-for="(section, index) in sections"
+            v-for="(section, index) in getOneProfile.profile.sections"
             :key='index'
           )
             // Header of section
@@ -63,68 +63,7 @@ import {mapGetters} from 'vuex'
 export default {
   data () {
     return {
-      profileId: this.$route.params.id,
-      showHobbies: false,
-      sections: [
-        {
-          sectionTitle: 'Хобби',
-          sectionAlias: 'hobbies',
-          showAddForm: false,
-          items: [
-            {name: 'Программирование'},
-            {name: 'Качалка'},
-            {name: 'Настольный теннис'},
-            {name: 'Вечеринки'}
-          ]
-        },
-        {
-          sectionTitle: 'Алкоголь',
-          sectionAlias: 'alcho',
-          showAddForm: false,
-          items: []
-        },
-        {
-          sectionTitle: 'Автомобили',
-          sectionAlias: 'automobile',
-          showAddForm: false,
-          items: [
-            {name: 'Лада Гранта'},
-            {name: 'BMW'}
-          ]
-        },
-        {
-          sectionTitle: 'Цветы',
-          sectionAlias: 'flowers',
-          showAddForm: false,
-          items: [
-            {name: 'Розы'},
-            {name: 'Тюльпаны'},
-            {name: 'Акации'},
-            {name: 'Мимозы'},
-            {name: 'Синие розы'},
-            {name: 'Ландыши'}
-          ]
-        },
-        {
-          sectionTitle: 'Спорт',
-          sectionAlias: 'sport',
-          showAddForm: false,
-          items: [
-            {name: 'Легкая атлетика'},
-            {name: 'Шашки'}
-          ]
-        },
-        {
-          sectionTitle: 'Фильмы',
-          sectionAlias: 'film',
-          showAddForm: false,
-          items: [
-            {name: 'Комедии'},
-            {name: 'Мелодрамы'},
-            {name: 'Ужастики'}
-          ]
-        }
-      ]
+      profileId: this.$route.params.id
     }
   },
   created () {

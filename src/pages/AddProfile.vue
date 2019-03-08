@@ -145,7 +145,67 @@ export default {
         const profile = {
           owner: 1,
           fullName: this.fio,
-          birthday: this.birthday
+          birthday: this.birthday,
+          sections: [
+            {
+              sectionTitle: 'Хобби',
+              sectionAlias: 'hobbies',
+              showAddForm: false,
+              items: [
+                {name: 'Программирование'},
+                {name: 'Качалка'},
+                {name: 'Настольный теннис'},
+                {name: 'Вечеринки'}
+              ]
+            },
+            {
+              sectionTitle: 'Алкоголь',
+              sectionAlias: 'alcho',
+              showAddForm: false,
+              items: []
+            },
+            {
+              sectionTitle: 'Автомобили',
+              sectionAlias: 'automobile',
+              showAddForm: false,
+              items: [
+                {name: 'Лада Гранта'},
+                {name: 'BMW'}
+              ]
+            },
+            {
+              sectionTitle: 'Цветы',
+              sectionAlias: 'flowers',
+              showAddForm: false,
+              items: [
+                {name: 'Розы'},
+                {name: 'Тюльпаны'},
+                {name: 'Акации'},
+                {name: 'Мимозы'},
+                {name: 'Синие розы'},
+                {name: 'Ландыши'}
+              ]
+            },
+            {
+              sectionTitle: 'Спорт',
+              sectionAlias: 'sport',
+              showAddForm: false,
+              items: [
+                {name: 'Легкая атлетика'},
+                {name: 'Шашки'}
+              ]
+            },
+            {
+              sectionTitle: 'Фильмы',
+              sectionAlias: 'film',
+              showAddForm: false,
+              items: [
+                {name: 'Комедии'},
+                {name: 'Мелодрамы'},
+                {name: 'Ужастики'}
+              ]
+            }
+          ]
         }
         // Initiate action in the store
         this.$store.dispatch('newProfile', profile)

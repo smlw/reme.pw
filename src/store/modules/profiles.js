@@ -6,11 +6,11 @@ const state = {
 }
 
 const actions = {
-  newProfile: async ({commit}, payload) => {
+  newProfile: async ({commit, dispatch}, payload) => {
     try {
       await Axios.post('http://127.0.0.1:3001/api/profile/add', payload)
 
-      commit('newProfile', payload)
+      dispatch('loadProfiles')
     } catch (error) {
       throw error
     }
@@ -37,7 +37,6 @@ const actions = {
           owner: 1
         }
       })
-      console.log(data)
       commit('loadProfiles', data.profiles)
       commit('setLoading', false)
     } catch (error) {
@@ -49,9 +48,6 @@ const actions = {
 }
 
 const mutations = {
-  newProfile: (state, payload) => {
-    state.profiles.push(payload)
-  },
   loadProfiles: (state, payload) => {
     state.profiles = payload
   },

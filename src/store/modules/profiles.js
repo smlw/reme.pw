@@ -1,12 +1,8 @@
 import Axios from 'axios'
 
 const state = {
-  profiles: [
-    { id: '1', fullName: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', age: '20', profession: 'Студент' },
-    { id: '2', fullName: 'Travis Howard', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg', age: '21', profession: 'Врач' },
-    { id: '3', fullName: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg', age: '20', profession: 'Слесарь' },
-    { id: '4', fullName: 'Ali2d Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg', age: '18', profession: 'Педагог' }
-  ]
+  profiles: [],
+  profile: {}
 }
 
 const actions = {
@@ -19,16 +15,34 @@ const actions = {
       throw error
     }
   },
-  loadProfiles: async ({commit}) => {
+  loadProfileOnce: async ({commit}, id) => {
     try {
-      const {data} = await Axios.get('http://127.0.0.1:3001/api/profile/', {
+      const {data} = await Axios.get('http://127.0.0.1:3001/api/profile/' + id)
+      console.log(data)
+      if (data) {
+        commit('loadProfileOnce', data)
+      } else {
+        console.log('errorororo')
+      }
+    } catch (error) {
+      throw error
+    }
+  },
+  loadProfiles: async ({commit}) => {
+    commit('clearError')
+    commit('setLoading', true)
+    try {
+      const {data} = await Axios.get('http://127.0.0.1:3001/api/profiles/', {
         params: {
           owner: 1
         }
       })
       console.log(data)
       commit('loadProfiles', data.profiles)
+      commit('setLoading', false)
     } catch (error) {
+      commit('setLoading', false)
+      commit('setError', error.message)
       throw error
     }
   }
@@ -40,6 +54,9 @@ const mutations = {
   },
   loadProfiles: (state, payload) => {
     state.profiles = payload
+  },
+  loadProfileOnce: (state, payload) => {
+    state.profile = payload
   }
 }
 
@@ -47,10 +64,8 @@ const getters = {
   getProfiles: state => {
     return state.profiles
   },
-  getOneProfile: (state, getters, rootState) => {
-    return getters.getProfiles.filter(profile => {
-      return profile.id === rootState.route.params.id
-    })
+  getOneProfile: state => {
+    return state.profile
   }
 }
 

@@ -144,7 +144,7 @@ export default {
         // build profile info for send to sever
         const profile = {
           owner: 1,
-          fio: this.fio,
+          fullName: this.fio,
           birthday: this.birthday
         }
         // Initiate action in the store

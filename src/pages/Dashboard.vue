@@ -3,33 +3,38 @@
     template(v-slot:content='')
       h1(
         class="display-1"
-      ) Мои профайлы
-      .profiles(v-for="(profile, index) in getProfiles" :key="index")
-        span {{ profile.name }}
-      //- masonry(
-      //-   :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
-      //-   :gutter="{default: '30px', 768: '15px'}"
-      //- )
-      //-   div(v-for="(profile, index) in getProfiles" :key="index")
-      //-     v-card.item
-      //-       v-img(:src="`${profile.avatar}`", height='200px')
-      //-       v-card-title(primary-title='')
-      //-         div
-      //-           .headline {{ profile.title }}
-      //-           span.grey--text {{ profile.age }} лет. {{ profile.profession }}
-      //-       v-card-actions
-      //-         router-link.profile-links(
-      //-           :to="`profile/${profile.id}`"
-      //-         )
-      //-           v-btn(flat='') Смотреть
+      ) Мои профайлы {{loadingStatus}}
+      //- .profiles(v-for="(profile, index) in getProfiles" :key="index")
+      //-   span {{ profile.fullName }}
+      masonry(
+        :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
+        :gutter="{default: '30px', 768: '15px'}"
+      )
+        div(v-for="(profile, index) in getProfiles" :key="index")
+          v-card.item
+            v-img(src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=976&q=80", height='200px')
+            v-card-title(primary-title='')
+              div
+                .headline {{ profile.fullName }}
+                span.grey--text {{ profile.birthday }} лет. {{ profile.profession }}
+            v-card-actions
+              router-link.profile-links(
+                :to="`profile/${profile.id}`"
+              )
+                v-btn(flat='') Смотреть
 </template>
 
 <script>
 import Layout from '@/layouts/main'
-import {mapGetters} from 'vuex'
+// import {mapGetters} from 'vuex'
 export default {
   computed: {
-    ...mapGetters(['getProfiles'])
+    getProfiles () {
+      return this.$store.getters.getProfiles
+    },
+    loadingStatus () {
+      return this.$store.getters.loading
+    }
   },
   name: 'Dashboard',
   metaInfo: {

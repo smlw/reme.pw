@@ -1,6 +1,6 @@
 <template lang="pug">
   Layout
-    template(v-slot:content='')
+    template(v-slot:content='' v-if="getOneProfile.profile")
       v-layout(align-center='', justify-start='', row='', fill-height='')
         .profile__main-info
           v-avatar(
@@ -13,8 +13,8 @@
               alt="avatar"
             )
         v-layout(align-start='', justify-center='', column='', fill-height='')
-          h1.title.ml-4 Самойлов Александр Сергеевич {{profileId}} {{$route.params.id}}
-          h2.subheading.ml-4 5 июня 1997 — 21 год {{ getOneProfile }}
+          h1.title.ml-4 {{ getOneProfile.profile.fullName }}
+          h2.subheading.ml-4 {{ getOneProfile.profile.birthday }} — {{getOneProfile.profile.birthday}} год
       .customSection__wrapper.mt-4
         masonry(
           :cols="{default: 3, 1000: 3, 768: 2, 400: 1}"
@@ -59,7 +59,7 @@
 
 <script>
 import Layout from '@/layouts/main'
-// import {mapGetters} from 'vuex'
+import {mapGetters} from 'vuex'
 export default {
   data () {
     return {
@@ -127,10 +127,11 @@ export default {
       ]
     }
   },
+  created () {
+    this.$store.dispatch('loadProfileOnce', this.profileId)
+  },
   computed: {
-    getOneProfile () {
-      return this.$store.getters.getOneProfile
-    }
+    ...mapGetters(['getOneProfile'])
   },
   name: 'Profile',
   metaInfo: {

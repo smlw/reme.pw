@@ -10,7 +10,7 @@
             :to="`profile/${profile.id}`"
           )
             v-list-tile-content
-              v-list-tile-title(v-text='profile.title')
+              v-list-tile-title(v-text='profile.fullName')
             v-list-tile-avatar
               img(:src='profile.avatar')
 </template>

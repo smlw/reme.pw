@@ -3,10 +3,14 @@
     // leftside bar
     keep-alive
       v-navigation-drawer(app v-model="drawer")
-        MenuUserAvatar
-        MenuUserProfiles
-        MenuUserActions
-
+        .block(v-if="getUser")
+          MenuUserAvatar
+          MenuUserProfiles
+          MenuUserActions
+        v-layout(v-else align-center='', justify-center='', column='', fill-height='')
+          v-icon(size="48") https
+          p.text-xs-center
+            div.title.mt-2.mb-2 Вы не вошли в систему
     // Topside bar
     v-toolbar(app)
       v-layout.hidden-lg-and-up(align-center='', justify-space-between='', row='', fill-height='')
@@ -33,6 +37,7 @@
 import MenuUserAvatar from '@/components/Menu/MenuUserAvatar'
 import MenuUserProfiles from '@/components/Menu/MenuUserProfiles'
 import MenuUserActions from '@/components/Menu/MenuUserActions'
+import {mapGetters} from 'vuex'
 export default {
   components: {MenuUserAvatar, MenuUserProfiles, MenuUserActions},
   data () {
@@ -44,6 +49,9 @@ export default {
         {title: 'Календарь', to: '/calendar', icon: 'calendar_today'}
       ]
     }
+  },
+  computed: {
+    ...mapGetters(['getUser'])
   }
 }
 </script>

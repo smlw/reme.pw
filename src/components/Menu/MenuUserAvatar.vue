@@ -1,15 +1,15 @@
 <template lang="pug">
-  .user-avatar
+  .user-avatar()
     v-avatar(
       :tile="tile"
       :size="48"
       color="grey"
     )
       img(
-        src="https://vuetifyjs.com/apple-touch-icon-180x180.png"
+        :src="`${getUser.photoUrl}`"
         alt="avatar"
       )
-    span Самойлов Александр
+    span {{ getUser.displayName }}
 </template>
 
 <style lang="stylus">
@@ -21,11 +21,15 @@
 </style>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   data () {
     return {
       tile: false
     }
+  },
+  computed: {
+    ...mapGetters(['getProfiles', 'getUser'])
   }
 }
 </script>

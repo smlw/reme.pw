@@ -11,6 +11,7 @@ export default {
   },
   created () {
     this.$store.dispatch('loadProfiles')
+    this.$store.dispatch('authVkontakte')
   }
 }
 </script>

@@ -37,6 +37,7 @@ const actions = {
           owner: 1
         }
       })
+      console.log(data)
       commit('loadProfiles', data.profiles)
       commit('setLoading', false)
     } catch (error) {

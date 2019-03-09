@@ -1,12 +1,17 @@
 <template lang="pug">
   Layout
     template(v-slot:content='')
-      .d testlay22
+      a(@click="getVkAuth") Vk auth
 </template>
 
 <script>
 import Layout from '@/layouts/main'
 export default {
+  methods: {
+    getVkAuth () {
+      window.location.href = 'http://localhost:3001/auth/vkontakte/'
+    }
+  },
   name: 'Test',
   metaInfo: {
     title: 'test title'

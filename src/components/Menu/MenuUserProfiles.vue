@@ -5,7 +5,7 @@
         template(v-slot:activator='')
           v-list-tile
             v-list-tile-title Профили
-        transition-group(name="fade", tag="div")
+        transition-group(name="fade", tag="div", v-if="getProfiles.length")
           v-list-tile(v-for='(profile, index) in getProfiles', :key='profile.id')
               router-link.profile-links(
                 :to="`profile/${profile.id}`"
@@ -14,6 +14,10 @@
                   v-list-tile-title(v-text='profile.fullName')
                 v-list-tile-avatar
                   img(:src='profile.avatar')
+        v-layout.d-flex.pa-4(v-else align-center='', justify-center='', column='', fill-height='')
+          span Список профайлов пуст.
+          v-btn.white--text(color='blue-grey', small, to='/add') Добавить
+            v-icon(right='', dark='') add
 </template>
 
 <script>

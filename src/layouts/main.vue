@@ -1,10 +1,11 @@
 <template lang="pug">
   v-app
     // leftside bar
-    v-navigation-drawer(app v-model="drawer")
-      MenuUserAvatar
-      MenuUserProfiles
-      MenuUserActions
+    keep-alive
+      v-navigation-drawer(app v-model="drawer")
+        MenuUserAvatar
+        MenuUserProfiles
+        MenuUserActions
 
     // Topside bar
     v-toolbar(app)

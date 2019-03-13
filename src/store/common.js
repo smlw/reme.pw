@@ -1,6 +1,7 @@
 const state = {
   loading: false,
-  error: null
+  error: null,
+  message: null
 }
 
 const actions = {
@@ -12,6 +13,12 @@ const actions = {
   },
   clearError: ({commit}) => {
     commit('clearError')
+  },
+  clearMessage: ({commit}) => {
+    commit('clearMessage')
+  },
+  setMessage: ({commit}, payload) => {
+    commit('setMessage')
   }
 }
 
@@ -24,6 +31,12 @@ const mutations = {
   },
   clearError: (state) => {
     state.error = null
+  },
+  clearMessage: (state) => {
+    state.message = null
+  },
+  setMessage: (state, payload) => {
+    state.message = payload
   }
 }
 
@@ -33,6 +46,9 @@ const getters = {
   },
   error: (state) => {
     return state.error
+  },
+  message: (state) => {
+    return state.message
   }
 }
 

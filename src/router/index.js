@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import store from '../store'
 
 const Home = () => import('@/pages/Home')
-const Dashboard = () => import('@/pages/Dashboard')
 const AddProfile = () => import('@/pages/AddProfile')
 const ViewProfile = () => import('@/pages/ViewProfile')
 
@@ -16,12 +15,6 @@ const router = new Router({
       path: '/',
       component: Home,
       meta: {title: 'Главная страница'}
-    },
-    {
-      name: 'dashboard',
-      path: '/dashboard',
-      component: Dashboard,
-      meta: {title: 'Профайлы', requireAuth: true}
     },
     {
       name: 'add profile',

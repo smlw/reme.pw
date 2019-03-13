@@ -135,7 +135,7 @@ export default {
         this.snackbar = {
           show: true,
           color: 'red',
-          message: 'Ошибка!'
+          message: 'Ошибка. Проверьте правильность формы.'
         }
       } else {
         // do your submit logic here
@@ -143,7 +143,7 @@ export default {
 
         // build profile info for send to sever
         const profile = {
-          owner: 'this.$store.getters.getUserProfile.id',
+          owner: this.$store.getters.getAuthUser.id,
           fullName: this.fio,
           birthday: this.birthday,
           sections: [
@@ -209,20 +209,20 @@ export default {
         }
         // Initiate action in the store
         this.$store.dispatch('newProfile', profile)
-          .then(() => {
+          .then(res => {
             this.submitStatus = 'OK'
             this.snackbar = {
               show: true,
-              color: 'success',
-              message: 'Успех! Профиль успешно создан.'
+              message: this.$store.getters.message,
+              color: 'success'
             }
           })
-          .catch(err => {
-            this.submitStatus = err.message
+          .catch(() => {
+            this.submitStatus = 'ERROR'
             this.snackbar = {
               show: true,
-              color: 'red',
-              message: 'Ошибка!'
+              message: this.$store.getters.error,
+              color: 'red'
             }
           })
       }

@@ -6,6 +6,7 @@
 export default {
   created () {
     this.$store.dispatch('getAuthUser')
+    this.$store.dispatch('loadProfiles')
   }
 }
 </script>

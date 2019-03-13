@@ -45,7 +45,6 @@ export default {
     return {
       menuItems: [
         {title: 'Добавить профайл', to: '/add', icon: 'add_circle'},
-        {title: 'Мои профайлы', to: '/', icon: 'list_alt'},
         {title: 'Календарь', to: '/calendar', icon: 'calendar_today'}
       ]
     }

@@ -143,7 +143,7 @@ export default {
 
         // build profile info for send to sever
         const profile = {
-          owner: this.$store.getters.getUserProfile.id,
+          owner: 'this.$store.getters.getUserProfile.id',
           fullName: this.fio,
           birthday: this.birthday,
           sections: [
@@ -244,9 +244,6 @@ export default {
       !this.$v.birthday.required && errors.push('Дата рождения не может быть такой длинной.')
       return errors
     }
-  },
-  metaInfo: {
-    title: 'Add profile'
   },
   components: { Layout, 'my-upload': myUpload }
 }

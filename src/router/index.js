@@ -2,56 +2,54 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
 
-const Index = () => import('@/pages/Index')
+const Home = () => import('@/pages/Home')
 const Dashboard = () => import('@/pages/Dashboard')
 const AddProfile = () => import('@/pages/AddProfile')
 const ViewProfile = () => import('@/pages/ViewProfile')
-const Auth = () => import('@/pages/Auth')
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'index',
-      component: Index
+      component: Home,
+      meta: {title: 'Главная страница'}
     },
     {
       name: 'dashboard',
       path: '/dashboard',
       component: Dashboard,
-      beforeEnter (to, from, next) {
-        store.getters.getUser ? next() : next('/auth')
-      }
+      meta: {title: 'Профайлы', requireAuth: true}
     },
     {
       name: 'add profile',
       path: '/add',
       component: AddProfile,
-      beforeEnter (to, from, next) {
-        store.getters.getUser ? next() : next('/auth')
-      }
+      meta: {title: 'Добавить профайл', requireAuth: true}
     },
     {
       name: 'view profile',
       path: '/profile/:id',
       component: ViewProfile,
-      beforeEnter (to, from, next) {
-        store.getters.getUser ? next() : next('/auth')
-      },
+      meta: {title: 'Профайл', requireAuth: true},
       children: [
         {
           name: 'edit profile',
           path: 'edit'
         }
       ]
-    },
-    {
-      name: 'auth',
-      path: '/auth',
-      component: Auth
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'home' && to.meta.requireAuth && !store.getters.checkUser) {
+    next('/')
+  } else {
+    next()
+  }
+})
+
+export default router

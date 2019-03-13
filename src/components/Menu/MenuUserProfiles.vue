@@ -5,7 +5,7 @@
         template(v-slot:activator='')
           v-list-tile
             v-list-tile-title Профили
-        transition-group(name="fade", tag="div", v-if="getProfiles")
+        transition-group(name="fade", tag="div", v-if="getProfiles.length")
           v-list-tile(v-for='(profile, index) in getProfiles', :key='profile.id')
               router-link.profile-links(
                 :to="`profile/${profile.id}`"

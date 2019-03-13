@@ -36,10 +36,6 @@ export default {
       return this.$store.getters.loading
     }
   },
-  name: 'Dashboard',
-  metaInfo: {
-    title: 'Dashboard'
-  },
   components: { Layout }
 }
 </script>

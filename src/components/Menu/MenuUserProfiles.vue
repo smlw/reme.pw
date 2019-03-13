@@ -4,16 +4,17 @@
       v-list-group(prepend-icon='account_circle', value='true')
         template(v-slot:activator='')
           v-list-tile
-            v-list-tile-title Профили
+            v-list-tile-title Профайлы
         transition-group(v-if="getProfiles.length != 0" name="fade", tag="div")
-          v-list-tile(v-for='(profile, index) in getProfiles', :key='profile.id')
+            v-list-tile.pt-1.pb-1(v-for='(profile, index) in getProfiles', :key='profile.id')
               router-link.profile-links(
                 :to="`profile/${profile.id}`"
               )
-                v-list-tile-content
-                  v-list-tile-title(v-text='profile.fullName')
-                v-list-tile-avatar
-                  img(:src='profile.avatar')
+                v-layout(align-center='', justify-space-between='', row='', fill-height='')
+                  v-list-tile-content
+                    v-list-tile-title(v-text='profile.fullName')
+                  v-list-tile-avatar
+                    img(src="https://joeschmoe.io/api/v1/random")
         div(v-else)
           v-layout.d-flex.pa-4(align-center='', justify-center='', column='', fill-height='', key="div")
             span Список профайлов пуст.

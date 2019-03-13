@@ -13,7 +13,7 @@
         )
           div(v-for="(profile, index) in getProfiles" :key="index")
             v-card.item
-              v-img(src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=976&q=80", height='200px')
+              v-img(src="https://joeschmoe.io/api/v1/random", height='200px')
               v-card-title(primary-title='')
                 div
                   .headline {{ profile.fullName }}

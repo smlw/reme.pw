@@ -2,11 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
 
-import Index from '@/pages/Index'
-import Dashboard from '@/pages/Dashboard'
-import AddProfile from '@/pages/AddProfile'
-import ViewProfile from '@/pages/ViewProfile'
-import Auth from '@/pages/Auth'
+const Index = () => import('@/pages/Index')
+const Dashboard = () => import('@/pages/Dashboard')
+const AddProfile = () => import('@/pages/AddProfile')
+const ViewProfile = () => import('@/pages/ViewProfile')
+const Auth = () => import('@/pages/Auth')
 
 Vue.use(Router)
 

@@ -6,10 +6,10 @@
       color="grey"
     )
       img(
-        :src="`${getUser.photoUrl}`"
+        :src="`${getUserProfile.user.photoUrl}`"
         alt="avatar"
       )
-    span {{ getUser.displayName }}
+    span {{ getUserProfile.user.displayName }}
 </template>
 
 <style lang="stylus">
@@ -29,7 +29,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getUser'])
+    ...mapGetters(['getUserProfile'])
   }
 }
 </script>

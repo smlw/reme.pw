@@ -14,7 +14,7 @@
             )
         v-layout(align-start='', justify-center='', column='', fill-height='')
           h1.title.ml-4 {{ getOneProfile.profile.fullName }}
-          h2.subheading.ml-4 {{ getOneProfile.profile.birthday }} — {{getOneProfile.profile.birthday}} год
+          h2.subheading.ml-4 {{ getOneProfile.profile.birthday }} — {{year}}
       .customSection__wrapper.mt-4
         masonry(
           :cols="{default: 3, 1000: 3, 768: 2, 400: 1}"
@@ -63,7 +63,9 @@ import {mapGetters} from 'vuex'
 export default {
   data () {
     return {
-      profileId: this.$route.params.id
+      profileId: this.$route.params.id,
+      cases: [2, 0, 1, 1, 1, 2],
+      year: null
     }
   },
   created () {
@@ -72,6 +74,11 @@ export default {
   computed: {
     ...mapGetters(['getOneProfile'])
   },
+  // methods: {
+  //   declOfNum (number, titles) {
+  //     return titles[ (number % 100 > 4 && number % 100 < 20) ? 2 : this.cases[(number % 10 < 5) ? number % 10 : 5] ]
+  //   }
+  // },
   name: 'Profile',
   metaInfo: {
     title: 'Profile'

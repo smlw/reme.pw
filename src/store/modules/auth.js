@@ -5,23 +5,31 @@ const state = {
 }
 
 const actions = {
-  authVkontakte: async ({commit}) => {
-    const {data} = await Axios.get('http://localhost:3001/', {
+  getUserProfile: async ({commit}, sessionUUID) => {
+    let config = {
+      headers: {
+        'content-type': 'application/json'
+      },
       withCredentials: true
-    })
+    }
+    let params = {
+      sessionUUID: sessionUUID
+    }
 
-    commit('authVkontakte', data.user)
+    const {data} = await Axios.post('http://localhost:3001/getUserInfo', params, config)
+
+    commit('getUserProfile', data)
   }
 }
 
 const mutations = {
-  authVkontakte: (state, payload) => {
+  getUserProfile: (state, payload) => {
     state.user = payload
   }
 }
 
 const getters = {
-  getUser: state => {
+  getUserProfile: state => {
     return state.user
   }
 }

@@ -143,7 +143,7 @@ export default {
 
         // build profile info for send to sever
         const profile = {
-          owner: 1,
+          owner: this.$store.getters.getUserProfile.id,
           fullName: this.fio,
           birthday: this.birthday,
           sections: [

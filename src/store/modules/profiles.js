@@ -18,7 +18,7 @@ const actions = {
   loadProfileOnce: async ({commit}, id) => {
     try {
       const {data} = await Axios.get('http://127.0.0.1:3001/api/profile/' + id)
-      console.log(data)
+
       if (data) {
         commit('loadProfileOnce', data)
       } else {
@@ -33,9 +33,7 @@ const actions = {
     commit('setLoading', true)
     try {
       const {data} = await Axios.get('http://127.0.0.1:3001/api/profiles/', {
-        params: {
-          owner: 1
-        }
+        withCredentials: true
       })
       console.log(data)
       commit('loadProfiles', data.profiles)

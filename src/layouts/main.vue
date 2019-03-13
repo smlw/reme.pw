@@ -3,7 +3,7 @@
     // leftside bar
     keep-alive
       v-navigation-drawer(app v-model="drawer")
-        .block(v-if="getUser")
+        .block(v-if="getUserProfile")
           MenuUserAvatar
           MenuUserProfiles
           MenuUserActions
@@ -51,7 +51,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getUser'])
+    ...mapGetters(['getUserProfile'])
   }
 }
 </script>

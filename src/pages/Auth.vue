@@ -1,16 +1,32 @@
 <template lang="pug">
   Layout
     template(v-slot:content='')
-      a(@click="getVkAuth") Vk auth
+      a() Vk auth
 </template>
 
 <script>
 import Layout from '@/layouts/main'
 export default {
-  methods: {
-    getVkAuth () {
-      window.location.href = 'http://localhost:3001/auth/vkontakte/'
+  data () {
+    return {
+      sessionUUID: this.$session.get('sessionUUID')
     }
+  },
+  mounted () {
+    this.$store.dispatch('getUserProfile', this.sessionUUID)
+    // axios({
+    //   method: 'POST',
+    //   'url': 'http://localhost:3001/',
+    //   data: { sessionUUID: this.$session.get('sessionUUID') },
+    //   headers: { 'content-type': 'application/json' },
+    //   withCredentials: true
+    // })
+    //   .then(result => {
+    //     console.log(result.data)
+    //   })
+    //   .catch(error => {
+    //     console.error(error.response.data)
+    //   })
   },
   name: 'Test',
   metaInfo: {

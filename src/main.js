@@ -10,6 +10,7 @@ import Vuex from 'vuex'
 import store from './store'
 import Vuetify from 'vuetify'
 import { sync } from 'vuex-router-sync'
+import VueSession from 'vue-session'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
@@ -19,6 +20,9 @@ Vue.use(VueMasonry)
 Vue.use(Vuetify)
 Vue.use(Vuelidate)
 Vue.use(Vuex)
+Vue.use(VueSession, {
+  persist: true
+})
 Vue.use(Meta, {
   keyName: 'metaInfo', // the component option name that vue-meta looks for meta info on.
   attribute: 'data-vue-meta', // the attribute name vue-meta adds to the tags it observes

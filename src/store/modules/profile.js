@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 const state = {
-  profiles: [],
+  profiles: null,
   profile: null
 }
 
@@ -16,9 +16,11 @@ const actions = {
         withCredentials: true
       })
 
-      dispatch('loadProfiles')
+      if (data) {
+        dispatch('loadProfiles')
+        commit('setMessage', data.message)
+      }
       commit('setLoading', false)
-      commit('setMessage', data.message)
     } catch (error) {
       commit('setLoading', false)
       commit('setError', error.message)
@@ -35,7 +37,10 @@ const actions = {
         withCredentials: true
       })
 
-      commit('loadProfileOnce', data)
+      if (data) {
+        commit('loadProfileOnce', data)
+        commit('setMessage', data.message)
+      }
       commit('setLoading', false)
     } catch (error) {
       commit('setLoading', false)
@@ -53,7 +58,10 @@ const actions = {
         withCredentials: true
       })
 
-      commit('loadProfiles', data.profiles)
+      if (data.profiles) {
+        commit('loadProfiles', data.profiles)
+        commit('setMessage', data.message)
+      }
       commit('setLoading', false)
     } catch (error) {
       commit('setLoading', false)

@@ -10,6 +10,11 @@
         alt="avatar"
       )
     span {{ getAuthUser.displayName }}
+    div.mt-3
+      v-btn(small, color="primary") Настройки
+        v-icon(small).ml-2 settings
+      v-btn(small, color="normal", @click="logout") Выйти
+        v-icon(small).ml-2 exit_to_app
 </template>
 
 <style lang="stylus">
@@ -26,6 +31,12 @@ export default {
   data () {
     return {
       tile: false
+    }
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('logout')
+      this.$router.go('/')
     }
   },
   computed: {

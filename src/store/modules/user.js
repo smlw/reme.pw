@@ -5,8 +5,15 @@ const state = {
 }
 
 const actions = {
+  logout: async ({commit}) => {
+    await Axios.get('http://localhost:3001/api/user/logout', {
+      withCredentials: true
+    })
+
+    commit('logout')
+  },
   getAuthUser: async ({commit}) => {
-    const {data} = await Axios.get('http://localhost:3001/api/getUserProfile', {
+    const {data} = await Axios.get('http://localhost:3001/api/user/getUserProfile', {
       withCredentials: true
     })
 
@@ -19,6 +26,9 @@ const actions = {
 const mutations = {
   setAuthUser: (state, payload) => {
     state.user = payload
+  },
+  logout: state => {
+    state.user = null
   }
 }
 

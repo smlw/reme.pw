@@ -42,6 +42,50 @@
                   span 89826582717
       v-divider
 
+      v-layout.mt-3(align-start='', justify-center='', row='', fill-height='')
+        .profile-info_interests
+          h2.mb-3.headline Интересы
+          masonry(
+            :cols="{default: 2, 1000: 2, 768: 2, 400: 1}"
+            :gutter="{default: '10px', 768: '5px'}"
+            key="masonry"
+          )
+            .profile-info_interest-section
+              v-chip(color='indigo', text-color='white')
+                v-avatar
+                  v-icon fa-music
+                span Музыка
+              .profile-info_interest-chips.pa-2
+                v-chip(label='', outline='', color='indigo') Инди
+            .profile-info_interest-section
+              v-chip(color='orange', text-color='white')
+                v-avatar
+                  v-icon fa-film
+                span Кино, видео TV
+              .profile-info_interest-chips.pa-2
+                v-chip(label='', outline='', color='orange') Ужасы
+                v-chip(label='', outline='', color='orange') Мелодраммы
+            .profile-info_interest-section
+              v-chip(color='deep-purple lighten-2', text-color='white')
+                v-avatar
+                  v-icon fa-futbol-o
+                span Спорт
+              .profile-info_interest-chips.pa-2
+                v-chip(label='', outline='', color='deep-purple lighten-2') Ужасы
+                v-chip(label='', outline='', color='deep-purple lighten-2') Мелодраммы
+            .profile-info_interest-section
+              v-chip(color='cyan darken-2', text-color='white')
+                v-avatar
+                  v-icon fa-globe
+                span Отдых и путещевсвтия
+              .profile-info_interest-chips.pa-2
+                v-chip(label='', outline='', color='cyan darken-2') Австралия
+                v-chip(label='', outline='', color='cyan darken-2') Уганда
+                v-chip(label='', outline='', color='cyan darken-2') Индонезия
+                v-chip(label='', outline='', color='cyan darken-2') Ямайка
+        .profile-info_ideas
+          h2.headline Идеи
+
       //- v-layout(align-center='', justify-start='', row='', fill-height='')
       //-   .profile__main-info
       //-     v-avatar(
@@ -125,6 +169,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.profile-info_interests,
+.profile-info_ideas
+  width 50%
 .box-shadow
   box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
   background #fff

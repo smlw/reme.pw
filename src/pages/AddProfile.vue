@@ -8,8 +8,15 @@
         .add-profile-wrapper(class='pt-5')
           // AVATAR
           .add-profile__avatar
-            v-layout(align-center='', justify-start='', column='', fill-height='').add-profile__avatar--wrapper
-              v-carousel(hide-delimiters='' v-model="activeAvatar" :cycle="false" light=true height="200" max="200" style="width: 300px")
+            v-layout(align-center, justify-start, column, fill-height).add-profile__avatar--wrapper
+              v-carousel( hide-delimiters
+                          v-model="activeAvatar"
+                          next-icon='chevron_right'
+                          prev-icon='chevron_left'
+                          :cycle="false"
+                          light=true height="200"
+                          max="200"
+                          style="width: 300px")
                 v-layout(align-center='', justify-center='', row='', fill-height='')
                   v-carousel-item(v-for='(item,i) in avatarName', :key='i', width="200"  :src='`https://joeschmoe.io/api/v1/${item.name}`')
               h3.title.mt-3 {{ fio }}

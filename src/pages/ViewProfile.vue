@@ -10,7 +10,6 @@
             v-avatar.indigo.darken-4 8
             | Увлечений
           v-flex(xs12)
-            //- .caption Действия
             v-tooltip(bottom='')
               v-btn(flat='', icon='', slot='activator' color='pink')
                 v-icon bookmark
@@ -41,6 +40,7 @@
                 v-layout(align-center, justify-start, row, fill-height).profile-info.contact_line.pt-1.pb-1
                   v-icon.mr-3(color='grey darken-1' small) fa-phone
                   span 89826582717
+      v-divider
 
       //- v-layout(align-center='', justify-start='', row='', fill-height='')
       //-   .profile__main-info
@@ -126,6 +126,6 @@ export default {
 
 <style lang="stylus" scoped>
 .box-shadow
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
-    background #fff
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+  background #fff
 </style>

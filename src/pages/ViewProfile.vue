@@ -9,7 +9,7 @@
             color="grey"
           )
             img(
-              src="https://vuetifyjs.com/apple-touch-icon-180x180.png"
+              :src="`https://joeschmoe.io/api/v1/${getOneProfile.profile.avatar}`"
               alt="avatar"
             )
         v-layout(align-start='', justify-center='', column='', fill-height='')

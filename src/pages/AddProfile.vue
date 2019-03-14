@@ -9,26 +9,11 @@
           // AVATAR
           .add-profile__avatar
             v-layout(align-center='', justify-start='', column='', fill-height='').add-profile__avatar--wrapper
-              v-avatar(:size='150', color="grey lighten-2")
-                img(v-if="upload.imgDataUrl" :src='upload.imgDataUrl' @click='toggleShow')
-                <svg v-else xmlns="http://www.w3.org/2000/svg" @click='toggleShow' width="50" height="50" viewBox="-3 -3 30 30"><path d="M9 3L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2h-3.17L15 3H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 17l1.25-2.75L16 13l-2.75-1.25L12 9l-1.25 2.75L8 13l2.75 1.25z"/></svg>
-              a.mt-1(v-if="!upload.imgDataUrl", @click='toggleShow', prevent) Добавить аватар
+              v-carousel(hide-delimiters='' v-model="activeAvatar" :cycle="false" light=true height="200" max="200" style="width: 300px")
+                v-layout(align-center='', justify-center='', row='', fill-height='')
+                  v-carousel-item(v-for='(item,i) in avatarName', :key='i', width="200"  :src='`https://joeschmoe.io/api/v1/${item.name}`')
               h3.title.mt-3 {{ fio }}
               h4.body-2.mt-1 {{ birthday }}
-              my-upload(
-                  field='img',
-                  @crop-success='cropSuccess',
-                  @crop-upload-success='cropUploadSuccess',
-                  @crop-upload-fail='cropUploadFail',
-                  v-model='upload.uploadShow',
-                  :width='300', :height='300',
-                  url='/profile/upload',
-                  :params='upload.params',
-                  :headers='upload.headers',
-                  img-format='png',
-                  langType='ru',
-                )
-
           // FORM
           .add-profile__main-form
             v-form(ref='form', lazy-validation='', @submit.prevent='')
@@ -69,21 +54,16 @@
 <script>
 import Layout from '@/layouts/main'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
-import myUpload from 'vue-image-crop-upload'
+import {mapGetters} from 'vuex'
 export default {
   data () {
     return {
-      upload: {
-        uploadShow: false,
-        params: {
-          token: '123456798',
-          name: 'avatar'
-        },
-        headers: {
-          smail: '*_~'
-        },
-        imgDataUrl: ''
-      },
+      activeAvatar: 0,
+      avatarName: [
+        {name: 'jess'},
+        {name: 'jon'},
+        {name: 'jodi'}
+      ],
       snackbar: {
         show: false,
         message: '',
@@ -93,6 +73,7 @@ export default {
       owner: null,
       menuBirthday: false,
       birthday: null,
+      avatar: '',
       submitStatus: null
     }
   },
@@ -109,24 +90,6 @@ export default {
     }
   },
   methods: {
-    // Avatar methods
-    toggleShow () {
-      this.upload.uploadShow = !this.upload.uploadShow
-    },
-    cropSuccess (imgDataUrl, field) {
-      console.log('-------- crop success --------')
-      this.upload.imgDataUrl = imgDataUrl
-    },
-    cropUploadSuccess (jsonData, field) {
-      console.log('-------- upload success --------')
-      console.log(jsonData)
-      console.log('field: ' + field)
-    },
-    cropUploadFail (status, field) {
-      console.log('-------- upload fail --------')
-      console.log(status)
-      console.log('field: ' + field)
-    },
     // Submit form
     onSubmit () {
       this.$v.$touch()
@@ -146,6 +109,7 @@ export default {
           owner: this.$store.getters.getAuthUser.id,
           fullName: this.fio,
           birthday: this.birthday,
+          avatar: this.avatarName[this.activeAvatar].name,
           sections: [
             {
               sectionTitle: 'Хобби',
@@ -209,7 +173,7 @@ export default {
         }
         // Initiate action in the store
         this.$store.dispatch('newProfile', profile)
-          .then(res => {
+          .then(() => {
             this.submitStatus = 'OK'
             this.snackbar = {
               show: true,
@@ -229,6 +193,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['getOneProfile']),
     fioErrors () {
       const errors = []
       if (!this.$v.fio.$dirty) return errors
@@ -245,11 +210,13 @@ export default {
       return errors
     }
   },
-  components: { Layout, 'my-upload': myUpload }
+  components: { Layout }
 }
 </script>
 
 <style lang="stylus" scoped>
+.v-carousel
+  box-shadow none
 .v-avatar
   margin 0
 .add-profile-wrapper

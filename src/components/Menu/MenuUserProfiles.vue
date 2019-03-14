@@ -14,7 +14,7 @@
                   v-list-tile-content
                     v-list-tile-title(v-text='profile.fullName')
                   v-list-tile-avatar
-                    img(src="https://joeschmoe.io/api/v1/random")
+                    img(:src="`https://joeschmoe.io/api/v1/${profile.avatar}`")
         div(v-else)
           v-layout.d-flex.pa-4(align-center='', justify-center='', column='', fill-height='', key="div")
             span Список профайлов пуст.

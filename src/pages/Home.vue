@@ -7,22 +7,24 @@
         ) Мои профайлы
         //- .profiles(v-for="(profile, index) in getProfiles" :key="index")
         //-   span {{ profile.fullName }}
-        masonry(
-          :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
-          :gutter="{default: '30px', 768: '15px'}"
-        )
-          div(v-for="(profile, index) in getProfiles" :key="index")
-            v-card.item
-              v-img(src="https://joeschmoe.io/api/v1/random", height='200px')
-              v-card-title(primary-title='')
-                div
-                  .headline {{ profile.fullName }}
-                  span.grey--text {{ profile.birthday }} лет. {{ profile.profession }}
-              v-card-actions
-                router-link.profile-links(
-                  :to="`profile/${profile.id}`"
-                )
-                  v-btn(flat='') Смотреть
+        transition-group(name="fade", tag="div")
+          masonry(
+            :cols="{default: 4, 1000: 3, 768: 2, 400: 1}"
+            :gutter="{default: '30px', 768: '15px'}"
+            key="masonry"
+          )
+            div(v-for="(profile, index) in getProfiles" :key="profile.id")
+              v-card.item
+                v-img(:src="`https://joeschmoe.io/api/v1/${profile.avatar}`", height='200px')
+                v-card-title(primary-title='')
+                  div
+                    .headline {{ profile.fullName }}
+                    span.grey--text {{ profile.birthday }} лет. {{ profile.profession }}
+                v-card-actions
+                  router-link.profile-links(
+                    :to="`profile/${profile.id}`"
+                  )
+                    v-btn(flat='') Смотреть
       div(v-else)
         a(@click="getAuth") link to vk
 </template>

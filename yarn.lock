@@ -1640,7 +1640,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -9486,11 +9486,6 @@ vue-cli-plugin-apollo@^0.19.1:
     subscriptions-transport-ws "^0.9.15"
     ts-node "^7.0.1"
 
-vue-cookies@^1.5.12:
-  version "1.5.12"
-  resolved "https://registry.yarnpkg.com/vue-cookies/-/vue-cookies-1.5.12.tgz#a78bd0eda078c1fbf4a6806505343a825c77a880"
-  integrity sha512-NaXbxyJIyi8/UgC8ZLQ6O+6OQze5taToCWOkRo28NP4ZRtEyQ04qkEu6KL9g/1w/BGsuhUw5puSi13V0qz8vnw==
-
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"
@@ -9507,13 +9502,6 @@ vue-hot-reload-api@^2.2.0:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"
   integrity sha512-KmvZVtmM26BQOMK1rwUZsrqxEGeKiYSZGA7SNWE6uExx8UX/cj9hq2MRV/wWC3Cq6AoeDGk57rL9YMFRel/q+g==
-
-vue-image-crop-upload@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/vue-image-crop-upload/-/vue-image-crop-upload-2.5.0.tgz#2dcf499e5b4944bc5077fc30b5f24d5e977f313c"
-  integrity sha512-AV+ZwPuaZ8tKdSopaSOCk4v0JqKZjFu6uLQg5D06pzt2GLcIR8NgrFz+/S0YN25RgkC4vHvUr9+XcNSUTk28ng==
-  dependencies:
-    babel-runtime "^6.11.6"
 
 vue-loader@^13.3.0:
   version "13.7.3"
@@ -9553,11 +9541,6 @@ vue-router@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.2.tgz#dedc67afe6c4e2bc25682c8b1c2a8c0d7c7e56be"
   integrity sha512-opKtsxjp9eOcFWdp6xLQPLmRGgfM932Tl56U9chYTnoWqKxQ8M20N7AkdEbM5beUh6wICoFGYugAX9vQjyJLFg==
-
-vue-session@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/vue-session/-/vue-session-1.0.0.tgz#ca642c751f569a48f8dd66f356f1727fbe081f7c"
-  integrity sha512-Ep9lRKGgCZdcGV3In3R3zoSp5Wr+hlcIc8WJ9BG+QKzibwaFZnnvp9HBVdd+dU8d6HGLSi5sWywDmd5MkrkfoQ==
 
 vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
   version "3.1.2"

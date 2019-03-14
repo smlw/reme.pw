@@ -9,27 +9,38 @@
           v-chip(color='indigo', text-color='white')
             v-avatar.indigo.darken-4 8
             | Увлечений
+          v-flex(xs12)
+            //- .caption Действия
+            v-tooltip(bottom='')
+              v-btn(flat='', icon='', slot='activator' color='pink')
+                v-icon bookmark
+              span Добавить в закладки
+            v-tooltip(bottom='')
+              v-btn(flat='', icon='', slot='activator' color='indigo')
+                v-icon share
+              span Поделиться
+            v-tooltip(bottom='')
+              v-btn(flat='', icon='', slot='activator' color='deep-orange')
+                v-icon edit
+              span Редактировать профиль
         v-flex.text-xs-center(xs12, lg4)
           v-avatar(tile, size='200')
             img(:src='`https://joeschmoe.io/api/v1/${getOneProfile.profile.avatar}`', alt='avatar')
         v-layout(align-start='', justify-space-between='', column='', fill-height='')
-          div.profile-main-info
+          .profile-info_main
             h1.title {{ getOneProfile.profile.fullName }}
               span.subheading.ml-3 21 год
-            v-flex.mt-4(xs12)
-              .caption Действия
-              v-tooltip(bottom='')
-                v-btn(flat='', icon='', slot='activator' color='pink')
-                  v-icon bookmark
-                span Добавить в закладки
-              v-tooltip(bottom='')
-                v-btn(flat='', icon='', slot='activator' color='indigo')
-                  v-icon share
-                span Поделиться
-              v-tooltip(bottom='')
-                v-btn(flat='', icon='', slot='activator' color='deep-orange')
-                  v-icon edit
-                span Редактировать профиль
+            v-flex(xs12).mt-2.mb-2
+              .profile-info_contacts
+                v-layout(align-center, justify-start, row, fill-height).profile-info.contact_line.pt-1.pb-1
+                  v-icon.mr-3(color='primary' small) fa-vk
+                  a(href="https://vk.com/smlwmy") https://vk.com/smlwmy
+                v-layout(align-center, justify-start, row, fill-height).profile-info.contact_line.pt-1.pb-1
+                  v-icon.mr-3(color='red lighten-1' small) fa-instagram
+                  a() + Добавить ссылку
+                v-layout(align-center, justify-start, row, fill-height).profile-info.contact_line.pt-1.pb-1
+                  v-icon.mr-3(color='grey darken-1' small) fa-phone
+                  span 89826582717
 
       //- v-layout(align-center='', justify-start='', row='', fill-height='')
       //-   .profile__main-info

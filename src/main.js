@@ -11,11 +11,14 @@ import Vuetify from 'vuetify'
 import { sync } from 'vuex-router-sync'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 sync(store, router)
 
 Vue.use(VueMasonry)
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+  iconfont: 'fa4'
+})
 Vue.use(Vuelidate)
 Vue.use(Vuex)
 

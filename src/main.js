@@ -9,9 +9,13 @@ import Vuex from 'vuex'
 import store from './store'
 import Vuetify from 'vuetify'
 import { sync } from 'vuex-router-sync'
+import VueCookie from 'vue-cookie'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'font-awesome/css/font-awesome.min.css'
+
+// ГЛОБАЛЬНО ПЕРЕД КАЖДЫМ ЗАПРОСОМ ПРОВЕРЯЕТ И УСТАНАВЛИВАЕТ -HEADERS-
+// import interceptorsSetup from './config/helpers'
 
 sync(store, router)
 
@@ -21,6 +25,10 @@ Vue.use(Vuetify, {
 })
 Vue.use(Vuelidate)
 Vue.use(Vuex)
+Vue.use(VueCookie)
+
+// ГЛОБАЛЬНО ПЕРЕД КАЖДЫМ ЗАПРОСОМ ПРОВЕРЯЕТ И УСТАНАВЛИВАЕТ -HEADERS-
+// interceptorsSetup()
 
 Vue.config.productionTip = false
 

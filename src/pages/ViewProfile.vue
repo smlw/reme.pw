@@ -44,19 +44,43 @@
 
       v-layout.mt-3(align-start='', justify-center='', row='', fill-height='')
         .profile-info_interests
-          h2.mb-3.headline Интересы
+          v-layout.mb-3(align-center='', justify-start='', row='', fill-height='')
+            span.headline Интересы
+            v-tooltip(v-if="!isEdit" bottom)
+              v-btn(flat='', icon='', slot='activator' color='grey darken-1' @click="interestsEdit()")
+                v-icon() edit
+              span Редактировать
+            v-tooltip(v-else-if="isEdit" bottom)
+              v-btn(flat='', icon='', slot='activator' color='grey darken-1' @click="interestsCancel()")
+                v-icon() close
+              span Отмена
+            //- v-tooltip(v-else bottom)
+            //-   v-btn(flat='', icon='', slot='activator' color='grey darken-1' @click="interestsSave()")
+            //-     v-icon() save
+            //-   span Сохранить изменения
+            v-tooltip(bottom='')
+              v-btn(flat='', icon='', slot='activator' color='grey darken-1')
+                v-icon view_list
+              span Список интересов
           masonry(
             :cols="{default: 2, 1000: 2, 768: 2, 400: 1}"
             :gutter="{default: '10px', 768: '5px'}"
             key="masonry"
           )
-            .profile-info_interest-section
-              v-chip(color='indigo', text-color='white')
+            .profile-info_interest-section(v-for="(section, index) in sections" :key="section.id")
+              v-chip(:color='section.color', :text-color='section.textColor')
                 v-avatar
-                  v-icon fa-music
-                span Музыка
+                  v-icon {{ section.icon }}
+                span {{ section.name }}
               .profile-info_interest-chips.pa-2
-                v-chip(label='', outline='', color='indigo') Инди
+                transition-group(name="fade", tag="div")
+                  v-chip(
+                        v-for="(chip, index) in section.chips",
+                        :key="chip.id" label, outline,
+                        :close='chip.close'
+                        v-model="chip.isActual"
+                        :color='chip.color') {{ chip.chipName }}
+
             .profile-info_interest-section
               v-chip(color='orange', text-color='white')
                 v-avatar
@@ -71,8 +95,9 @@
                   v-icon fa-futbol-o
                 span Спорт
               .profile-info_interest-chips.pa-2
-                v-chip(label='', outline='', color='deep-purple lighten-2') Ужасы
-                v-chip(label='', outline='', color='deep-purple lighten-2') Мелодраммы
+                v-chip(label='', outline='', color='deep-purple lighten-2') Футбол
+                v-chip(label='', outline='', color='deep-purple lighten-2') Манчестер-Юнайтед
+                v-chip(label='', outline='', color='deep-purple lighten-2') Бейсбол
             .profile-info_interest-section
               v-chip(color='cyan darken-2', text-color='white')
                 v-avatar
@@ -85,61 +110,6 @@
                 v-chip(label='', outline='', color='cyan darken-2') Ямайка
         .profile-info_ideas
           h2.headline Идеи
-
-      //- v-layout(align-center='', justify-start='', row='', fill-height='')
-      //-   .profile__main-info
-      //-     v-avatar(
-      //-       :tile="false"
-      //-       size="64"
-      //-       color="grey"
-      //-     )
-      //-       img(
-      //-         :src="`https://joeschmoe.io/api/v1/${getOneProfile.profile.avatar}`"
-      //-         alt="avatar"
-      //-       )
-      //-   v-layout(align-start='', justify-center='', column='', fill-height='')
-      //-     h1.title.ml-4 {{ getOneProfile.profile.fullName }}
-      //-     h2.subheading.ml-4 {{ getOneProfile.profile.birthday }} — {{year}}
-      //- .customSection__wrapper.mt-4
-      //-   masonry(
-      //-     :cols="{default: 3, 1000: 3, 768: 2, 400: 1}"
-      //-     :gutter="{default: '30px', 768: '15px'}"
-      //-   )
-      //-     v-flex.customSection.item.box-shadow.mb-3(
-      //-       v-for="(section, index) in getOneProfile.profile.sections"
-      //-       :key='index'
-      //-     )
-      //-       // Header of section
-      //-       v-layout(align-center='', justify-space-between='', row='', fill-height='').title__actions.pl-3.pt-2.pb-2
-      //-         .title {{ section.sectionTitle }}
-      //-         .title__actions
-      //-           v-btn(fab, dark, outline, small, color='indigo', @click="section.showAddForm = !section.showAddForm")
-      //-             v-icon(dark='') add
-      //-           v-btn(fab, dark, outline, small, color='teal')
-      //-             v-icon(dark='') edit
-      //-       v-divider
-      //-       // Print items
-      //-       .section-items.pa-2(v-if="section.items.length")
-      //-         .section-items__item
-      //-           v-chip(color='blue', text-color='white',
-      //-           v-for="(item, index) in section.items"
-      //-           :key='index'
-      //-         ) {{item.name}}
-
-      //-       // If nobody items
-      //-       .section-items__empty.pa-4.text-xs-center(v-else)
-      //-         span Пока тут пусто.
-      //-         a(@click="section.showAddForm = !section.showAddForm")  Добавить
-
-      //-       // Form for add item
-      //-       .add-item-form(v-if="section.showAddForm")
-      //-         v-divider
-      //-         v-layout(align-center='', justify-center='', row='', fill-height='')
-      //-           v-form(ref='form', lazy-validation='', @submit.prevent='')
-      //-             v-text-field(
-      //-               :label="`${section.sectionTitle}`"
-      //-             )
-      //-           v-btn(small color="primary") Добавить
 </template>
 
 <script>
@@ -150,11 +120,57 @@ export default {
     return {
       profileId: this.$route.params.id,
       cases: [2, 0, 1, 1, 1, 2],
-      year: null
+      year: null,
+      isEdit: false,
+      isChanges: false,
+      actionIcons: [
+        {ico: 'edit'},
+        {ico: 'save'},
+        {ico: 'close'}
+      ],
+      sections: [
+        {
+          id: 1,
+          name: 'Музыка',
+          icon: 'fa-music',
+          color: 'indigo',
+          textColor: 'white',
+          chips: [
+            { id: 1, chipName: 'Инди', color: 'indigo', close: false, isActual: true },
+            { id: 2, chipName: 'Шансон', color: 'indigo', close: false, isActual: true }
+          ]
+        }
+      ]
     }
   },
   created () {
     this.$store.dispatch('loadProfileOnce', this.profileId)
+  },
+  methods: {
+    interestsEdit () {
+      this.isEdit = true
+      this.sections.map(section => {
+        section.chips.map(chip => {
+          chip.close = true
+        })
+      })
+    },
+    interestsCancel () {
+      this.isEdit = false
+      this.sections.map(section => {
+        section.chips.map(chip => {
+          chip.close = false
+        })
+      })
+    },
+    deleteChip () {
+      this.isChanges = true
+      this.sections.map(section => {
+        section.chips.map(chip => {
+          chip.isActual = !chip.isActual
+        })
+      })
+    }
   },
   computed: {
     ...mapGetters(['getOneProfile'])

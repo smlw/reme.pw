@@ -72,11 +72,14 @@
                 transition-group(name="fade", tag="div")
                   v-chip(
                         v-for="(chip, index) in section.chips",
-                        :key="chip.id" label, outline,
+                        :key="chip._id" label, outline,
                         :close='chip.close'
                         v-model="chip.isActual"
                         @input="removeChip(chip.id)"
                         :color='chip.color') {{ chip.chipName }}
+                span {{section.id}}
+              v-flex(xs12='')
+                v-text-field(v-model='message', :append-outer-icon="message ? `fa-send` : `return` ", box='', clear-icon='fa-times', clearable='', label='Музыка', type='text', @click:append-outer='sendMessage(section._id)', @click:prepend='changeIcon', @click:clear='clearMessage')
         .profile-info_ideas
           h2.headline Идеи
 </template>
@@ -88,13 +91,36 @@ export default {
   data () {
     return {
       profileId: this.$route.params.id,
-      editMode: 0
+      editMode: 0,
+      profile: null,
+      password: 'Password',
+      show: false,
+      message: 'Hey!'
     }
   },
   created () {
     this.$store.dispatch('loadProfileOnce', this.profileId)
   },
   methods: {
+    sendMessage (sectionId) {
+      this.$store.dispatch('addChip', {
+        sectionId: sectionId,
+        message: this.message
+      })
+      this.resetIcon()
+      this.clearMessage()
+    },
+    clearMessage () {
+      this.message = ''
+    },
+    resetIcon () {
+      this.iconIndex = 0
+    },
+    changeIcon () {
+      this.iconIndex === this.icons.length - 1
+        ? this.iconIndex = 0
+        : this.iconIndex++
+    },
     interestsEdit () {
       this.editMode = 1
       this.$store.dispatch('toggleEdit')
@@ -105,7 +131,7 @@ export default {
     },
     removeChip (chipId) {
       console.log(chipId)
-      // this.$store.dispatch('removeChip', chipId)
+      this.$store.dispatch('removeChip', chipId)
     }
   },
   computed: {

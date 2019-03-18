@@ -6,7 +6,6 @@
 // import axios from 'axios'
 export default {
   created () {
-    this.$store.dispatch('getAuthUser')
     this.$store.dispatch('loadProfiles')
   }
 }

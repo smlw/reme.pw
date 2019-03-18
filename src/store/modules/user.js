@@ -1,8 +1,7 @@
 import Axios from 'axios'
 
 const state = {
-  user: null,
-  token: localStorage.getItem('access_token') || null
+  user: null
 }
 
 const actions = {

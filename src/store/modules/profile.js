@@ -2,12 +2,20 @@ import Axios from 'axios'
 
 const state = {
   profiles: null,
-  profile: null
+  oneProfile: null
 }
 
 const actions = {
   toggleEdit: ({commit}) => {
     commit('toggleEdit')
+  },
+  addChip: async ({commit}, payload) => {
+    const {data} = await Axios.post('http://localhost:3001/api/profile/interests/add', payload, {
+      withCredentials: true
+    })
+    console.log(data)
+    console.log(payload)
+    // commit('addChip', {sectionId, message})
   },
   // Заводим новый профайл
   newProfile: async ({commit, dispatch}, payload) => {
@@ -40,7 +48,6 @@ const actions = {
         withCredentials: true
       })
       if (data.profile) {
-        console.log(data.profile)
         commit('loadProfileOnce', data.profile)
         commit('setMessage', data.message)
       }
@@ -75,9 +82,12 @@ const actions = {
 }
 
 const mutations = {
+  addChip: (state, payload) => {
+    console.log(payload)
+  },
   toggleEdit: (state, payload) => {
     // console.log(state.profile)
-    state.profile.sections.forEach(i => {
+    state.oneProfile.sections.forEach(i => {
       i.chips.forEach(c => {
         console.log(c)
         c.close = !c.close
@@ -88,7 +98,7 @@ const mutations = {
     state.profiles = payload
   },
   loadProfileOnce: (state, payload) => {
-    state.profile = payload
+    state.oneProfile = payload
   }
 }
 
@@ -97,7 +107,7 @@ const getters = {
     return state.profiles
   },
   getOneProfile: (state) => {
-    return state.profile
+    return state.oneProfile
   }
 }
 

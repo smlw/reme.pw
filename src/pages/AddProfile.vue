@@ -119,14 +119,13 @@ export default {
           avatar: this.avatarName[this.activeAvatar].name,
           sections: [
             {
-              id: 1,
               name: 'Музыка',
               icon: 'fa-music',
               color: 'indigo',
               textColor: 'white',
               chips: [
-                { id: 'aaa', chipName: 'Инди', color: 'indigo', close: false, isActual: true },
-                { id: 'bbb', chipName: 'Шансон', color: 'indigo', close: false, isActual: true }
+                { chipName: 'Инди', color: 'indigo', close: false, isActual: true },
+                { chipName: 'Шансон', color: 'indigo', close: false, isActual: true }
               ]
             }
           ]

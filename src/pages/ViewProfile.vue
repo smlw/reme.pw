@@ -13,7 +13,7 @@
             v-tooltip(bottom='')
               v-btn(flat='', icon='', slot='activator' color='pink')
                 v-icon bookmark
-              span Добавить в закладки
+              span Добавить в закладк и
             v-tooltip(bottom='')
               v-btn(flat='', icon='', slot='activator' color='indigo')
                 v-icon share
@@ -24,10 +24,10 @@
               span Редактировать профиль
         v-flex.text-xs-center(xs12, lg4)
           v-avatar(tile, size='200')
-            img(:src='`https://joeschmoe.io/api/v1/${getOneProfile.profile.avatar}`', alt='avatar')
+            img(:src='`https://joeschmoe.io/api/v1/${getOneProfile.avatar}`', alt='avatar')
         v-layout(align-start='', justify-space-between='', column='', fill-height='')
           .profile-info_main
-            h1.title {{ getOneProfile.profile.fullName }}
+            h1.title {{ getOneProfile.fullName }}
               span.subheading.ml-3 21 год
             v-flex(xs12).mt-2.mb-2
               .profile-info_contacts
@@ -46,28 +46,24 @@
         .profile-info_interests
           v-layout.mb-3(align-center='', justify-start='', row='', fill-height='')
             span.headline Интересы
-            v-tooltip(v-if="!isEdit" bottom)
+            v-tooltip(v-if="editMode === 0" bottom)
               v-btn(flat='', icon='', slot='activator' color='grey darken-1' @click="interestsEdit()")
                 v-icon() edit
               span Редактировать
-            v-tooltip(v-else-if="isEdit" bottom)
+            v-tooltip(v-else-if="editMode === 1" bottom)
               v-btn(flat='', icon='', slot='activator' color='grey darken-1' @click="interestsCancel()")
                 v-icon() close
               span Отмена
-            //- v-tooltip(v-else bottom)
-            //-   v-btn(flat='', icon='', slot='activator' color='grey darken-1' @click="interestsSave()")
-            //-     v-icon() save
-            //-   span Сохранить изменения
-            v-tooltip(bottom='')
-              v-btn(flat='', icon='', slot='activator' color='grey darken-1')
-                v-icon view_list
-              span Список интересов
+            v-tooltip(v-else-if="editMode === 2" bottom)
+              v-btn(flat='', icon='', slot='activator' color='grey darken-1' @click="interestsSave()")
+                v-icon() save
+              span Сохранить изменения
           masonry(
             :cols="{default: 2, 1000: 2, 768: 2, 400: 1}"
             :gutter="{default: '10px', 768: '5px'}"
             key="masonry"
           )
-            .profile-info_interest-section(v-for="(section, index) in sections" :key="section.id")
+            .profile-info_interest-section(v-for="(section, index) in getOneProfile.sections" :key="section.id")
               v-chip(:color='section.color', :text-color='section.textColor')
                 v-avatar
                   v-icon {{ section.icon }}
@@ -79,35 +75,8 @@
                         :key="chip.id" label, outline,
                         :close='chip.close'
                         v-model="chip.isActual"
+                        @input="removeChip(chip.id)"
                         :color='chip.color') {{ chip.chipName }}
-
-            .profile-info_interest-section
-              v-chip(color='orange', text-color='white')
-                v-avatar
-                  v-icon fa-film
-                span Кино, видео TV
-              .profile-info_interest-chips.pa-2
-                v-chip(label='', outline='', color='orange') Ужасы
-                v-chip(label='', outline='', color='orange') Мелодраммы
-            .profile-info_interest-section
-              v-chip(color='deep-purple lighten-2', text-color='white')
-                v-avatar
-                  v-icon fa-futbol-o
-                span Спорт
-              .profile-info_interest-chips.pa-2
-                v-chip(label='', outline='', color='deep-purple lighten-2') Футбол
-                v-chip(label='', outline='', color='deep-purple lighten-2') Манчестер-Юнайтед
-                v-chip(label='', outline='', color='deep-purple lighten-2') Бейсбол
-            .profile-info_interest-section
-              v-chip(color='cyan darken-2', text-color='white')
-                v-avatar
-                  v-icon fa-globe
-                span Отдых и путещевсвтия
-              .profile-info_interest-chips.pa-2
-                v-chip(label='', outline='', color='cyan darken-2') Австралия
-                v-chip(label='', outline='', color='cyan darken-2') Уганда
-                v-chip(label='', outline='', color='cyan darken-2') Индонезия
-                v-chip(label='', outline='', color='cyan darken-2') Ямайка
         .profile-info_ideas
           h2.headline Идеи
 </template>
@@ -119,28 +88,7 @@ export default {
   data () {
     return {
       profileId: this.$route.params.id,
-      cases: [2, 0, 1, 1, 1, 2],
-      year: null,
-      isEdit: false,
-      isChanges: false,
-      actionIcons: [
-        {ico: 'edit'},
-        {ico: 'save'},
-        {ico: 'close'}
-      ],
-      sections: [
-        {
-          id: 1,
-          name: 'Музыка',
-          icon: 'fa-music',
-          color: 'indigo',
-          textColor: 'white',
-          chips: [
-            { id: 1, chipName: 'Инди', color: 'indigo', close: false, isActual: true },
-            { id: 2, chipName: 'Шансон', color: 'indigo', close: false, isActual: true }
-          ]
-        }
-      ]
+      editMode: 0
     }
   },
   created () {
@@ -148,28 +96,16 @@ export default {
   },
   methods: {
     interestsEdit () {
-      this.isEdit = true
-      this.sections.map(section => {
-        section.chips.map(chip => {
-          chip.close = true
-        })
-      })
+      this.editMode = 1
+      this.$store.dispatch('toggleEdit')
     },
     interestsCancel () {
-      this.isEdit = false
-      this.sections.map(section => {
-        section.chips.map(chip => {
-          chip.close = false
-        })
-      })
+      this.editMode = 0
+      this.$store.dispatch('toggleEdit')
     },
-    deleteChip () {
-      this.isChanges = true
-      this.sections.map(section => {
-        section.chips.map(chip => {
-          chip.isActual = !chip.isActual
-        })
-      })
+    removeChip (chipId) {
+      console.log(chipId)
+      // this.$store.dispatch('removeChip', chipId)
     }
   },
   computed: {

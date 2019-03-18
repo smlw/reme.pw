@@ -119,61 +119,14 @@ export default {
           avatar: this.avatarName[this.activeAvatar].name,
           sections: [
             {
-              sectionTitle: 'Хобби',
-              sectionAlias: 'hobbies',
-              showAddForm: false,
-              items: [
-                {name: 'Программирование'},
-                {name: 'Качалка'},
-                {name: 'Настольный теннис'},
-                {name: 'Вечеринки'}
-              ]
-            },
-            {
-              sectionTitle: 'Алкоголь',
-              sectionAlias: 'alcho',
-              showAddForm: false,
-              items: []
-            },
-            {
-              sectionTitle: 'Автомобили',
-              sectionAlias: 'automobile',
-              showAddForm: false,
-              items: [
-                {name: 'Лада Гранта'},
-                {name: 'BMW'}
-              ]
-            },
-            {
-              sectionTitle: 'Цветы',
-              sectionAlias: 'flowers',
-              showAddForm: false,
-              items: [
-                {name: 'Розы'},
-                {name: 'Тюльпаны'},
-                {name: 'Акации'},
-                {name: 'Мимозы'},
-                {name: 'Синие розы'},
-                {name: 'Ландыши'}
-              ]
-            },
-            {
-              sectionTitle: 'Спорт',
-              sectionAlias: 'sport',
-              showAddForm: false,
-              items: [
-                {name: 'Легкая атлетика'},
-                {name: 'Шашки'}
-              ]
-            },
-            {
-              sectionTitle: 'Фильмы',
-              sectionAlias: 'film',
-              showAddForm: false,
-              items: [
-                {name: 'Комедии'},
-                {name: 'Мелодрамы'},
-                {name: 'Ужастики'}
+              id: 1,
+              name: 'Музыка',
+              icon: 'fa-music',
+              color: 'indigo',
+              textColor: 'white',
+              chips: [
+                { id: 'aaa', chipName: 'Инди', color: 'indigo', close: false, isActual: true },
+                { id: 'bbb', chipName: 'Шансон', color: 'indigo', close: false, isActual: true }
               ]
             }
           ]

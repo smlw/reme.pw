@@ -6,6 +6,9 @@ const state = {
 }
 
 const actions = {
+  toggleEdit: ({commit}) => {
+    commit('toggleEdit')
+  },
   // Заводим новый профайл
   newProfile: async ({commit, dispatch}, payload) => {
     commit('clearError')
@@ -36,9 +39,9 @@ const actions = {
       const {data} = await Axios.get('http://localhost:3001/api/profile/' + id, {
         withCredentials: true
       })
-
-      if (data) {
-        commit('loadProfileOnce', data)
+      if (data.profile) {
+        console.log(data.profile)
+        commit('loadProfileOnce', data.profile)
         commit('setMessage', data.message)
       }
       commit('setLoading', false)
@@ -72,6 +75,15 @@ const actions = {
 }
 
 const mutations = {
+  toggleEdit: (state, payload) => {
+    // console.log(state.profile)
+    state.profile.sections.forEach(i => {
+      i.chips.forEach(c => {
+        console.log(c)
+        c.close = !c.close
+      })
+    })
+  },
   loadProfiles: (state, payload) => {
     state.profiles = payload
   },
@@ -81,10 +93,10 @@ const mutations = {
 }
 
 const getters = {
-  getProfiles: state => {
+  getProfiles: (state) => {
     return state.profiles
   },
-  getOneProfile: state => {
+  getOneProfile: (state) => {
     return state.profile
   }
 }

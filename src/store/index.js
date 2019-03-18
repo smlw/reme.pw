@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import common from './common'
 import profile from './modules/profile'
 import user from './modules/user'
-import common from './common'
 
 Vue.use(Vuex)
 

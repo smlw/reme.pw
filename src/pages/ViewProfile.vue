@@ -63,23 +63,23 @@
             :gutter="{default: '10px', 768: '5px'}"
             key="masonry"
           )
-            .profile-info_interest-section(v-for="(section, index) in getOneProfile.sections" :key="section.id")
-              v-chip(:color='section.color', :text-color='section.textColor')
+            .profile-info_interest-section(v-for="(interest, index) in getOneProfile.interest.interest" :key="interest._id")
+              v-chip(:color='interest.color', :text-color='interest.textColor')
                 v-avatar
-                  v-icon {{ section.icon }}
-                span {{ section.name }}
+                  v-icon {{ interest.icon }}
+                span {{ interest.name }}
+              span {{interest._id}}
               .profile-info_interest-chips.pa-2
-                transition-group(name="fade", tag="div")
-                  v-chip(
-                        v-for="(chip, index) in section.chips",
-                        :key="chip._id" label, outline,
-                        :close='chip.close'
-                        v-model="chip.isActual"
-                        @input="removeChip(chip.id)"
-                        :color='chip.color') {{ chip.chipName }}
-                span {{section.id}}
-              v-flex(xs12='')
-                v-text-field(v-model='message', :append-outer-icon="message ? `fa-send` : `return` ", box='', clear-icon='fa-times', clearable='', label='Музыка', type='text', @click:append-outer='sendMessage(section._id)', @click:prepend='changeIcon', @click:clear='clearMessage')
+                v-chip(
+                      v-for="(chip, index) in interest.chips",
+                      :key="chip._id" label, outline,
+                      :close='chip.close'
+                      v-model="chip.isActual"
+                      @input="removeChip(chip.id)"
+                      :color='chip.color') {{ chip.chipName }}
+              //- v-flex(xs12='')
+                //- v-text-field(v-model='message', :append-outer-icon="message ? `fa-send` : `return` ", box='', clear-icon='fa-times', clearable='', label='Музыка', type='text', @click:append-outer='sendMessage(section._id)', @click:prepend='changeIcon', @click:clear='clearMessage')
+                //- v-text-field(label='Prepend', @click:append-outer='sendMessage(section._id)' append-outer-icon="fa-send")
         .profile-info_ideas
           h2.headline Идеи
 </template>
@@ -93,9 +93,8 @@ export default {
       profileId: this.$route.params.id,
       editMode: 0,
       profile: null,
-      password: 'Password',
       show: false,
-      message: 'Hey!'
+      message: ''
     }
   },
   created () {
@@ -107,19 +106,10 @@ export default {
         sectionId: sectionId,
         message: this.message
       })
-      this.resetIcon()
       this.clearMessage()
     },
     clearMessage () {
       this.message = ''
-    },
-    resetIcon () {
-      this.iconIndex = 0
-    },
-    changeIcon () {
-      this.iconIndex === this.icons.length - 1
-        ? this.iconIndex = 0
-        : this.iconIndex++
     },
     interestsEdit () {
       this.editMode = 1

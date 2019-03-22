@@ -116,19 +116,19 @@ export default {
           owner: this.$store.getters.getAuthUser.id,
           fullName: this.fio,
           birthday: this.birthday,
-          avatar: this.avatarName[this.activeAvatar].name,
-          sections: [
-            {
-              name: 'Музыка',
-              icon: 'fa-music',
-              color: 'indigo',
-              textColor: 'white',
-              chips: [
-                { chipName: 'Инди', color: 'indigo', close: false, isActual: true },
-                { chipName: 'Шансон', color: 'indigo', close: false, isActual: true }
-              ]
-            }
-          ]
+          avatar: this.avatarName[this.activeAvatar].name
+          // sections: [
+          //   {
+          //     name: 'Музыка',
+          //     icon: 'fa-music',
+          //     color: 'indigo',
+          //     textColor: 'white',
+          //     chips: [
+          //       { chipName: 'Инди', color: 'indigo', close: false, isActual: true },
+          //       { chipName: 'Шансон', color: 'indigo', close: false, isActual: true }
+          //     ]
+          //   }
+          // ]
         }
         // Initiate action in the store
         this.$store.dispatch('newProfile', profile)

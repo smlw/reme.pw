@@ -1,67 +1,68 @@
-// import Axios from 'axios'
+import Axios from 'axios'
 
 const state = {
-  interests: [
-    {
-      id: 1,
-      name: 'Музыка',
-      icon: 'fa-music',
-      color: 'indigo',
-      textColor: 'white',
-      chips: [
-        { id: 'aaa', chipName: 'Инди', color: 'indigo', close: false, isActual: true },
-        { id: 'bbb', chipName: 'Шансон', color: 'indigo', close: false, isActual: true }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Кино, видео TV',
-      icon: 'fa-film',
-      color: 'orange',
-      textColor: 'white',
-      chips: [
-        { id: 'ccc', chipName: 'Ужасы', color: 'orange', close: false, isActual: true },
-        { id: 'vvv', chipName: 'Мелодраммы', color: 'orange', close: false, isActual: true }
-      ]
-    },
-    {
-      id: 3,
-      name: 'Отдых и путещевсвтия',
-      icon: 'fa-globe',
-      color: 'cyan darken-2',
-      textColor: 'white',
-      chips: [
-        { id: 'qqq', chipName: 'Австралия', color: 'cyan darken-2', close: false, isActual: true },
-        { id: 'ddd', chipName: 'Уганда', color: 'cyan darken-2', close: false, isActual: true },
-        { id: 'nnn', chipName: 'Индонезия', color: 'cyan darken-2', close: false, isActual: true },
-        { id: 'lll', chipName: 'Ямайка', color: 'cyan darken-2', close: false, isActual: true }
-      ]
-    }
-  ]
+  interests: []
 }
 
 const actions = {
-  toggleEdit: ({commit}) => {
-    commit('toggleEdit')
+  loadInterests: async ({commit}, profileID) => {
+    console.log(profileID)
+    const {data} = await Axios.get('http://localhost:3001/api/interest/' + profileID, {
+      withCredentials: true
+    })
+
+    if (data.interests) {
+      console.log(data.interests)
+      commit('loadInterests', data.interests.interest)
+    }
   },
-  addChip: ({commit}, payload) => {
-    commit('addChip')
+  removeChip: async ({commit, dispatch}, payload) => {
+    const {data} = await Axios.post('http://localhost:3001/api/interest/remove', payload, {
+      withCredentials: true
+    })
+
+    if (data) {
+      commit('removeChip', payload)
+    }
   },
-  removeInterest: ({commit}, payload) => {
-    commit('removeInterest')
-  },
-  addInterest: ({commit}, payload) => {
-    commit('addInterest')
+  addChip: async ({commit}, payload) => {
+    const {data} = await Axios.post('http://localhost:3001/api/interest/add', payload, {
+      withCredentials: true
+    })
+
+    if (data) {
+      console.log(data)
+      console.log(payload)
+      commit('addChip', payload)
+    }
   }
 }
 
 const mutations = {
-  toggleEdit: (state, payload) => {
-    state.interests.forEach(i => {
-      i.chips.forEach(c => {
-        c.close = !c.close
-      })
+  removeChip: (state, payload) => {
+    console.log('from mut')
+    state.interests.find(i => {
+      if (i._id === payload.interestID) {
+        console.log(i)
+        i.chips.find(chip => {
+          if (chip._id === payload.chipID) {
+            chip.isActual = false
+          }
+        })
+      }
     })
+  },
+  addChip: (state, payload) => {
+    console.log('add')
+    console.log(payload)
+    state.interests.find(i => {
+      if (i._id === payload.interestID) {
+        i.chips.push({chipName: payload.chipText})
+      }
+    })
+  },
+  loadInterests: (state, payload) => {
+    state.interests = payload
   }
 }
 

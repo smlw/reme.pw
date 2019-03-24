@@ -1,19 +1,19 @@
 <template lang="pug">
-  div
-    v-chip(
-      :close='close'
-      :color='chip.color'
-      label, outline
-      v-model='chip.isActual'
-      @input="removeChip(interest._id, chip._id)"
-    ) {{ chip.chipName }}
+  v-chip(
+    :close='close'
+    :color='chip.color'
+    label, outline
+    v-model='isActual'
+    @input="removeChip(interest._id, chip._id)"
+  ) {{ chip.chipName }}
 </template>
 
 <script>
 export default {
   data () {
     return {
-      profileID: this.$route.params.id
+      profileID: this.$route.params.id,
+      isActual: true
     }
   },
   props: ['chip', 'close', 'interest'],

@@ -63,11 +63,12 @@
             :gutter="{default: '10px', 768: '5px'}"
             key="masonry"
           )
-            Interest(
-              :interest='interest'
-              :close='close'
-              v-for="(interest, index) in getOneProfile.interest.interest" :key="interest._id"
-            )
+            transition-group(name="fade", tag="div" appear)
+              Interest(
+                :interest='interest'
+                :close='close'
+                v-for="(interest, index) in getInterests" :key="interest._id"
+              )
             //- .profile-info_interest-section(v-for="(interest, index) in getOneProfile.interest.interest" :key="interest._id")
             //-   v-chip(:color='interest.color', :text-color='interest.textColor')
             //-     v-avatar
@@ -88,7 +89,7 @@
             //-     )
         .profile-info_ideas
           h2.headline Идеи
-            span {{getOneProfile.interest.interest}}
+            span {{getInterests}}
 </template>
 
 <script>
@@ -100,27 +101,15 @@ export default {
     return {
       profileId: this.$route.params.id,
       editMode: 0,
-      profile: null,
       show: false,
-      message: '',
       close: false
     }
   },
   created () {
     this.$store.dispatch('loadProfileOnce', this.profileId)
+    this.$store.dispatch('loadInterests', this.profileId)
   },
   methods: {
-    // отправка нового интереса
-    sendMessage (sectionId) {
-      this.$store.dispatch('addChip', {
-        sectionId: sectionId,
-        message: this.message
-      })
-      this.clearMessage()
-    },
-    clearMessage () {
-      this.message = ''
-    },
     interestsEdit () {
       this.editMode = 1
       this.close = true
@@ -131,7 +120,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getOneProfile'])
+    ...mapGetters(['getOneProfile', 'getInterests'])
   },
   components: { Layout, Interest }
 }

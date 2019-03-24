@@ -6,18 +6,6 @@ const state = {
 }
 
 const actions = {
-  removeChip: async ({commit, dispatch}, payload) => {
-    const {data} = await Axios.post('http://localhost:3001/api/interest/remove', payload, {
-      withCredentials: true
-    })
-
-    if (data) {
-      commit('removeChip', payload)
-    }
-  },
-  addChip: async ({commit}, payload) => {
-    console.log(payload)
-  },
   // Заводим новый профайл
   newProfile: async ({commit, dispatch}, payload) => {
     commit('clearError')
@@ -84,19 +72,6 @@ const actions = {
 }
 
 const mutations = {
-  removeChip: (state, payload) => {
-    console.log('from mut')
-    state.oneProfile.interest.interest.find(i => {
-      if (i._id === payload.interestID) {
-        console.log(i)
-        i.chips.find(chip => {
-          if (chip._id === payload.chipID) {
-            chip.isActual = false
-          }
-        })
-      }
-    })
-  },
   loadProfiles: (state, payload) => {
     state.profiles = payload
   },

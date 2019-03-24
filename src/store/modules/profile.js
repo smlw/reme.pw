@@ -6,17 +6,17 @@ const state = {
 }
 
 const actions = {
-  toggleEdit: ({commit}) => {
-    commit('toggleEdit')
-  },
-  removeChip: async ({commit}, payload) => {
-    console.log(payload)
+  removeChip: async ({commit, dispatch}, payload) => {
     const {data} = await Axios.post('http://localhost:3001/api/interest/remove', payload, {
       withCredentials: true
     })
 
-    console.log(data)
-    commit('removeChip', payload)
+    if (data) {
+      commit('removeChip', payload)
+    }
+  },
+  addChip: async ({commit}, payload) => {
+    console.log(payload)
   },
   // Заводим новый профайл
   newProfile: async ({commit, dispatch}, payload) => {
@@ -95,15 +95,6 @@ const mutations = {
           }
         })
       }
-    })
-  },
-  toggleEdit: (state, payload) => {
-    // console.log(state.profile)
-    state.oneProfile.interest.interest.forEach(i => {
-      i.chips.forEach(c => {
-        console.log(c)
-        c.close = !c.close
-      })
     })
   },
   loadProfiles: (state, payload) => {

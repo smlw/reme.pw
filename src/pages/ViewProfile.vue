@@ -54,31 +54,38 @@
               v-btn(flat='', icon='', slot='activator' color='grey darken-1' @click="interestsCancel()")
                 v-icon() close
               span Отмена
-            v-tooltip(v-else-if="editMode === 2" bottom)
-              v-btn(flat='', icon='', slot='activator' color='grey darken-1' @click="interestsSave()")
-                v-icon() save
-              span Сохранить изменения
+            //- v-tooltip(v-else-if="editMode === 2" bottom)
+            //-   v-btn(flat='', icon='', slot='activator' color='grey darken-1' @click="interestsSave()")
+            //-     v-icon() save
+            //-   span Сохранить изменения
           masonry(
             :cols="{default: 2, 1000: 2, 768: 2, 400: 1}"
             :gutter="{default: '10px', 768: '5px'}"
             key="masonry"
           )
-            .profile-info_interest-section(v-for="(interest, index) in getOneProfile.interest.interest" :key="interest._id")
-              v-chip(:color='interest.color', :text-color='interest.textColor')
-                v-avatar
-                  v-icon {{ interest.icon }}
-                span {{ interest.name }}
-              .profile-info_interest-chips.pa-2
-                v-chip(
-                      v-for="(chip, index) in interest.chips",
-                      :key="chip._id" label, outline,
-                      :close='chip.close'
-                      v-model='chip.isActual'
-                      @input="removeChip(getOneProfile._id, interest._id, chip._id)"
-                      :color='chip.color') {{ chip.chipName }}
-              //- v-flex(xs12='')
-                //- v-text-field(v-model='message', :append-outer-icon="message ? `fa-send` : `return` ", box='', clear-icon='fa-times', clearable='', label='Музыка', type='text', @click:append-outer='sendMessage(section._id)', @click:prepend='changeIcon', @click:clear='clearMessage')
-                //- v-text-field(label='Prepend', @click:append-outer='sendMessage(section._id)' append-outer-icon="fa-send")
+            Interest(
+              :interest='interest'
+              :close='close'
+              v-for="(interest, index) in getOneProfile.interest.interest" :key="interest._id"
+            )
+            //- .profile-info_interest-section(v-for="(interest, index) in getOneProfile.interest.interest" :key="interest._id")
+            //-   v-chip(:color='interest.color', :text-color='interest.textColor')
+            //-     v-avatar
+            //-       v-icon {{ interest.icon }}
+            //-     span {{ interest.name }}
+            //-   .profile-info_interest-chips.pa-2(v-if="interest.chips.length > 0")
+            //-     transition-group(name="fade", tag="div" appear)
+            //-       Chip( :chip='chip' :close='close' :interest='interest'
+            //-             v-for="(chip, index) in interest.chips", :key="chip._id"
+            //-           )
+            //-   v-flex(xs12 v-else)
+            //-     div(@click="showField = !showField") Пока тут пусто. Добавить?
+            //-     v-text-field(
+            //-       v-if="showField"
+            //-       :label='interest.name',
+            //-       @click:append-outer='sendMessage(interest._id)'
+            //-       append-outer-icon="fa-send"
+            //-     )
         .profile-info_ideas
           h2.headline Идеи
             span {{getOneProfile.interest.interest}}
@@ -86,6 +93,7 @@
 
 <script>
 import Layout from '@/layouts/main'
+import Interest from '@/components/UI/Interest'
 import {mapGetters} from 'vuex'
 export default {
   data () {
@@ -94,13 +102,15 @@ export default {
       editMode: 0,
       profile: null,
       show: false,
-      message: ''
+      message: '',
+      close: false
     }
   },
   created () {
     this.$store.dispatch('loadProfileOnce', this.profileId)
   },
   methods: {
+    // отправка нового интереса
     sendMessage (sectionId) {
       this.$store.dispatch('addChip', {
         sectionId: sectionId,
@@ -113,26 +123,17 @@ export default {
     },
     interestsEdit () {
       this.editMode = 1
-      this.$store.dispatch('toggleEdit')
+      this.close = true
     },
     interestsCancel () {
       this.editMode = 0
-      this.$store.dispatch('toggleEdit')
-    },
-    removeChip (profileID, interestID, chipID) {
-      console.log(profileID, interestID, chipID)
-      this.$store.dispatch('removeChip', {profileID, interestID, chipID})
+      this.close = false
     }
   },
   computed: {
     ...mapGetters(['getOneProfile'])
   },
-  // methods: {
-  //   declOfNum (number, titles) {
-  //     return titles[ (number % 100 > 4 && number % 100 < 20) ? 2 : this.cases[(number % 10 < 5) ? number % 10 : 5] ]
-  //   }
-  // },
-  components: { Layout }
+  components: { Layout, Interest }
 }
 </script>
 

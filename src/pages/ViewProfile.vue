@@ -68,20 +68,20 @@
                 v-avatar
                   v-icon {{ interest.icon }}
                 span {{ interest.name }}
-              span {{interest._id}}
               .profile-info_interest-chips.pa-2
                 v-chip(
                       v-for="(chip, index) in interest.chips",
                       :key="chip._id" label, outline,
                       :close='chip.close'
-                      v-model="chip.isActual"
-                      @input="removeChip(chip.id)"
+                      v-model='chip.isActual'
+                      @input="removeChip(getOneProfile._id, interest._id, chip._id)"
                       :color='chip.color') {{ chip.chipName }}
               //- v-flex(xs12='')
                 //- v-text-field(v-model='message', :append-outer-icon="message ? `fa-send` : `return` ", box='', clear-icon='fa-times', clearable='', label='Музыка', type='text', @click:append-outer='sendMessage(section._id)', @click:prepend='changeIcon', @click:clear='clearMessage')
                 //- v-text-field(label='Prepend', @click:append-outer='sendMessage(section._id)' append-outer-icon="fa-send")
         .profile-info_ideas
           h2.headline Идеи
+            span {{getOneProfile.interest.interest}}
 </template>
 
 <script>
@@ -119,9 +119,9 @@ export default {
       this.editMode = 0
       this.$store.dispatch('toggleEdit')
     },
-    removeChip (chipId) {
-      console.log(chipId)
-      this.$store.dispatch('removeChip', chipId)
+    removeChip (profileID, interestID, chipID) {
+      console.log(profileID, interestID, chipID)
+      this.$store.dispatch('removeChip', {profileID, interestID, chipID})
     }
   },
   computed: {

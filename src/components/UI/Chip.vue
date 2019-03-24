@@ -1,7 +1,7 @@
 <template lang="pug">
   v-chip(
     :close='close'
-    :color='chip.color'
+    :color='interest.color'
     label, outline
     v-model='isActual'
     @input="removeChip(interest._id, chip._id)"

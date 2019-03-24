@@ -8,7 +8,15 @@
       Chip( :chip='chip' :close='close' :interest='interest'
             v-for="(chip, index) in interest.chips", :key="chip._id"
           )
-    v-flex(xs12)
+      // Потенциальная новая чипса. Отображается когда вводится текст в инпуте
+      v-chip(
+        v-if="chipText.length > 0"
+        :close='false'
+        :color='interest.color'
+        label, outline
+      ) {{ chipText }}
+    // Тот самый инпут. Отображается если в категории нет чипсов
+    v-flex(xs12 v-else)
       div(@click="showField = !showField") Пока тут пусто. Добавить?
       v-text-field(
         v-if="showField"
